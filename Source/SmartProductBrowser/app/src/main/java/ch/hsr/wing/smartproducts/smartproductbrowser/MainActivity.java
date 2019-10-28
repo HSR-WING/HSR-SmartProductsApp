@@ -1,8 +1,10 @@
-package ch.hsr.wing.smartproductbrowser;
+package ch.hsr.wing.smartproducts.smartproductbrowser;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import ch.hsr.wing.smartproducts.R;
 
 public class MainActivity extends AppCompatActivity {
 
