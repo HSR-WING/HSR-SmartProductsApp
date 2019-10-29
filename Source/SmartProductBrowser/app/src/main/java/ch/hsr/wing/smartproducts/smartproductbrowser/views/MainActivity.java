@@ -1,4 +1,4 @@
-package ch.hsr.wing.smartproducts.smartproductbrowser;
+package ch.hsr.wing.smartproducts.smartproductbrowser.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
