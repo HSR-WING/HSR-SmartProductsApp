@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">Smart ShoppingCart Browser</string>
+    <string name="app_name">Smart ShoppingCart</string>
     <string name="nav_shopping_cart">Shopping Cart</string>
     <string name="nav_product_catalog">Product Catalog</string>
+    <string name="menu_item_settings">Settings</string>
+    <string name="settings_group_data_api">Data API</string>
+    <string name="settings_group_product_api">Product API</string>
+    <string name="settings_item_endpoint">Endpoint</string>
+    <string name="settings_action_test">Test</string>
 </resources>
