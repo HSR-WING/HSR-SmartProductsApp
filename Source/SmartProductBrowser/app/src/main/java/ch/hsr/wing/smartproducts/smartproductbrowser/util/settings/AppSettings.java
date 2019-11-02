@@ -10,11 +10,6 @@ public class AppSettings implements IAppSettings {
     }
 
     @Override
-    public SharedPreferences getSettings() {
-        return this._settings;
-    }
-
-    @Override
     public String getString(String key) {
         return this._settings.getString(key, "");
     }
