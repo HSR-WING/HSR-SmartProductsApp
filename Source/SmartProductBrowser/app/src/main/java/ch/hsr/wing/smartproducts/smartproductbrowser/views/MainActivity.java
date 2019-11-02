@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import ch.hsr.wing.smartproducts.R;
+import ch.hsr.wing.smartproducts.smartproductbrowser.views.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity implements IFragmentViewer {
 
@@ -40,11 +42,10 @@ public class MainActivity extends AppCompatActivity implements IFragmentViewer {
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.action_settings:
-
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private BottomNavigationView registerNavigation(){

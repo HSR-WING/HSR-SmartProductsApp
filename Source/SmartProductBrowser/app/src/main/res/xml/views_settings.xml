@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:key="data_settings_category"
+        app:title="@string/settings_group_data_api">
+
+        <EditTextPreference
+            app:key="data_api_endpoint"
+            app:title="@string/settings_item_endpoint"
+            />
+        <Preference
+            app:key="data_api_test"
+            app:title="@string/settings_action_test"
+            app:summary="Tap to test if the endpoint is reachable."
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:key="product_settings_category"
+        app:title="@string/settings_group_product_api">
+
+        <EditTextPreference
+            app:key="product_api_endpoint"
+            app:title="@string/settings_item_endpoint"
+            />
+        <Preference
+            app:key="product_api_test"
+            app:title="@string/settings_action_test"
+            app:summary="Tap to test if the endpoint is reachable."
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

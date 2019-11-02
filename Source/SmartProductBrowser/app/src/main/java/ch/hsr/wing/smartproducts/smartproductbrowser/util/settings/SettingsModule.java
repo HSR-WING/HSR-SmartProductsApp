@@ -27,10 +27,10 @@ public class SettingsModule {
         return settings;
     }
 
-    /*@Provides
+    @Provides
     public ConnectionSettings getConnecntionSettingsImpl(IAppSettings settings){
         return new ConnectionSettings(settings);
-    }*/
+    }
 
     @Provides
     public IConnectionSettings getConnectionSettings(ConnectionSettings settings){

@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".smartproductbrowser.views.settings.SettingsActivity"
+            android:label="@string/settings"/>
     </application>
 
 </manifest>
