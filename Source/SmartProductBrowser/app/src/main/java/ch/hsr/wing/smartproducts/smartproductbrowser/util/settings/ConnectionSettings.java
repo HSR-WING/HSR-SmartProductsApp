@@ -1,9 +1,12 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.util.settings;
 
+import javax.inject.Inject;
+
 public class ConnectionSettings implements IConnectionSettings {
 
     private final IAppSettings _settings;
 
+    @Inject
     public ConnectionSettings(IAppSettings settings){
         this._settings = settings;
     }

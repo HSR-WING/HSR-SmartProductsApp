@@ -8,17 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ViewModelModule {
-
-    @Provides
-    public ProductCatalogViewModel getProductCatalogViewModel(){
-        return new ProductCatalogViewModel();
-    }
-
-    @Provides
-    public ViewModelProvider.Factory getProductCatalogViewModelFactory(ProductCatalogViewModel vm){
-        return new ViewModelProviderFactory<>(vm);
-    }
+public class SettingsViewModelModule {
 
     @Provides
     public SettingsViewModel getSettingsViewModel(IConnectionSettings settings){
@@ -27,16 +17,6 @@ public class ViewModelModule {
 
     @Provides
     public ViewModelProvider.Factory getSettingsViewModelFactory(SettingsViewModel vm){
-        return new ViewModelProviderFactory<>(vm);
-    }
-
-    @Provides
-    public ShoppingCartViewModel getShoppingCartViewModel(){
-        return new ShoppingCartViewModel();
-    }
-
-    @Provides
-    public ViewModelProvider.Factory getShoppingCartViewModelFactory(ShoppingCartViewModel vm){
         return new ViewModelProviderFactory<>(vm);
     }
 
