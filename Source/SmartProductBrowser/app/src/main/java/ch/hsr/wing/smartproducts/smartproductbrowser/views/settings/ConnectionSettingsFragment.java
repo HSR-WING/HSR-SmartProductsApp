@@ -23,7 +23,7 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        DI.inject(this);
+        DI.getComponent().inject(this);
         setPreferencesFromResource(R.xml.views_settings, rootKey);
         this._viewModel = ViewModelProviders.of(this, this._factory).get(SettingsViewModel.class);
         this._viewModel.init();

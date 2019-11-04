@@ -2,7 +2,6 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.di;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.App;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.SettingsModule;
-import ch.hsr.wing.smartproducts.smartproductbrowser.views.settings.ConnectionSettingsFragment;
 
 public class DI {
 
@@ -14,7 +13,7 @@ public class DI {
                 .build();
     }
 
-    public static void inject(ConnectionSettingsFragment obj){
-        component.inject(obj);
+    public static DIComponent getComponent(){
+        return component;
     }
 }
