@@ -7,11 +7,12 @@
         app:title="@string/settings_group_data_api">
 
         <EditTextPreference
-            app:key="data_api_endpoint"
+            app:key="@string/key_data_api_endpoint"
             app:title="@string/settings_item_endpoint"
+
             />
         <Preference
-            app:key="data_api_test"
+            app:key="@string/key_data_api_test"
             app:title="@string/settings_action_test"
             app:summary="Tap to test if the endpoint is reachable."
             />
@@ -23,11 +24,11 @@
         app:title="@string/settings_group_product_api">
 
         <EditTextPreference
-            app:key="product_api_endpoint"
+            app:key="@string/key_product_api_endpoint"
             app:title="@string/settings_item_endpoint"
             />
         <Preference
-            app:key="product_api_test"
+            app:key="@string/key_product_api_test"
             app:title="@string/settings_action_test"
             app:summary="Tap to test if the endpoint is reachable."
             />

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key_data_api_endpoint">data_api_endpoint</string>
+    <string name="key_data_api_test">data_api_test</string>
+    <string name="key_product_api_endpoint">product_api_endpoint</string>
+    <string name="key_product_api_test">product_api_test</string>
+</resources>
