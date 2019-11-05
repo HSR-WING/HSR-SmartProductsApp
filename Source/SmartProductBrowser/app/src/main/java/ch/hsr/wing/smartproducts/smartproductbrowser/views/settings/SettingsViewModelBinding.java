@@ -45,7 +45,7 @@ public class SettingsViewModelBinding implements SharedPreferences.OnSharedPrefe
             String value = entry.getValue().get();
             edit.putString(entry.getKey(), value);
         }
-        edit.commit();
+        edit.apply();
     }
 
     private void refreshUI(){
