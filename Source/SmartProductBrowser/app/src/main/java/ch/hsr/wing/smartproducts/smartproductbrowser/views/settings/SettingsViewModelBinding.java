@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import androidx.databinding.ObservableField;
-import androidx.preference.PreferenceManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,28 +13,49 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.SettingsViewMode
 
 public class SettingsViewModelBinding implements SharedPreferences.OnSharedPreferenceChangeListener {
     private final SettingsViewModel _viewModel;
-    private final PreferenceManager _preferences;
+    private final ISettingsUICallback _ui;
 
     private final Map<String, ObservableField<String>> _mappings = new HashMap<>();
 
-    public SettingsViewModelBinding(SettingsViewModel vm, PreferenceManager preferences){
+    public SettingsViewModelBinding(SettingsViewModel vm, ISettingsUICallback callback){
         this._viewModel = vm;
-        this._preferences = preferences;
+        this._ui = callback;
         this.init();
     }
 
+    private SharedPreferences getPreferences(){
+        return this._ui.getPreferences();
+    }
+
     private void init(){
-        Resources res = this._preferences.getContext().getResources();
+        Resources res = this._ui.getResources();
         this._mappings.put(res.getString(R.string.key_data_api_endpoint), this._viewModel.dataEndpoint);
         this._mappings.put(res.getString(R.string.key_product_api_endpoint), this._viewModel.productEndpoint);
     }
 
     public void enable(){
-        this._preferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+        this.refresh();
+        this.refreshUI();
+        this.getPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    private void refresh(){
+        SharedPreferences.Editor edit = this.getPreferences().edit();
+        for(Map.Entry<String, ObservableField<String>> entry : this._mappings.entrySet()){
+            String value = entry.getValue().get();
+            edit.putString(entry.getKey(), value);
+        }
+        edit.commit();
+    }
+
+    private void refreshUI(){
+        for(Map.Entry<String, ObservableField<String>> entry : this._mappings.entrySet()){
+            this._ui.refresh(entry.getKey());
+        }
     }
 
     public void disable(){
-        this._preferences.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        this.getPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
