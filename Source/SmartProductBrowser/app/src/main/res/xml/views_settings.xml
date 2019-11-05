@@ -31,6 +31,7 @@
         <EditTextPreference
             app:key="@string/key_product_api_endpoint"
             app:title="@string/settings_item_endpoint"
+            app:summary="@string/settings_summary_productsapiendpoint"
             />
         <Preference
             app:key="@string/key_product_api_test"

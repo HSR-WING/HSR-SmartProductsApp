@@ -6,10 +6,13 @@
     <string name="settings_group_data_api">Data API</string>
     <string name="settings_group_product_api">Product API</string>
     <string name="settings_item_endpoint">Endpoint</string>
-    <string name="settings_summary_dataapiendpoint">Change the address of the Data API endpoint. Expected input: [ip]:[port]</string>
-    <string name="settings_summary_productsapiendpoint">Change the address of the Products API endpoint. Expected input: [ip]:[port]</string>
+    <string name="settings_summary_dataapiendpoint">Change the address of the Data API endpoint. Expected input: [protocol]://[ip]:[port]</string>
+    <string name="settings_summary_dataapiendpoint_current">Change the address of the Data API endpoint. Current: </string>
+    <string name="settings_summary_productsapiendpoint">Change the address of the Products API endpoint. Expected input: [protocol]://[ip]:[port]</string>
+    <string name="settings_summary_productsapiendpoint_current">Change the address of the Products API endpoint. Current: </string>
     <string name="settings_item_collection">Collection</string>
     <string name="settings_summary_dataapicollection">Define the collection with the items of your Shopping Cart.</string>
+    <string name="settings_summary_dataapicollection_current">Define the collection with the items of your Shopping Cart. Current: </string>
     <string name="settings_action_test">Test</string>
     <string name="settings_summary_test">Tap to test if the endpoint is reachable.</string>
     <string name="settings">Settings</string>

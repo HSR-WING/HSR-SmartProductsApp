@@ -7,4 +7,5 @@ public interface ISettingsUICallback {
     Resources getResources();
     SharedPreferences getPreferences();
     void refresh(String key);
+    void refreshSummary(String key);
 }
