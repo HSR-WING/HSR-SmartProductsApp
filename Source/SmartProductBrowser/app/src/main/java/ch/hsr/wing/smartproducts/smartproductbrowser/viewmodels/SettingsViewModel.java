@@ -1,7 +1,6 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels;
 
 import androidx.databinding.ObservableField;
-import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
@@ -23,5 +22,10 @@ public class SettingsViewModel extends BaseViewModel {
     protected void onInit() {
         dataEndpoint.set(this._settings.getDataEndpoint());
         productEndpoint.set(this._settings.getProductsEndpoint());
+    }
+
+    @Override
+    protected void onDispose() {
+
     }
 }

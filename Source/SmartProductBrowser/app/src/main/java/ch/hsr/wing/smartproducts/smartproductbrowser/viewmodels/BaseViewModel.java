@@ -19,4 +19,15 @@ public abstract class BaseViewModel extends ViewModel {
     }
 
     protected abstract void onInit();
+
+    @Override
+    protected void onCleared(){
+        if(this._isInitialized){
+            this.onDispose();
+            this._isInitialized = false;
+        }
+        super.onCleared();
+    }
+
+    protected abstract void onDispose();
 }

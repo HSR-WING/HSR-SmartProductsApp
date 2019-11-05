@@ -1,7 +1,5 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels;
 
-import androidx.lifecycle.ViewModel;
-
 import javax.inject.Inject;
 
 public class ProductCatalogViewModel extends BaseViewModel {
@@ -13,6 +11,11 @@ public class ProductCatalogViewModel extends BaseViewModel {
 
     @Override
     protected void onInit() {
+
+    }
+
+    @Override
+    protected void onDispose() {
 
     }
 }
