@@ -13,7 +13,7 @@ import dagger.Component;
 @Component(modules = {
         SettingsModule.class,
         ViewModelModule.class})
-public interface DIComponent {
+public interface IContainer {
     void inject(ConnectionSettingsFragment fragment);
     void inject(ProductCatalogFragment fragment);
     void inject(ShoppingCartFragment fragment);

@@ -1,6 +1,5 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.views.settings;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -23,7 +22,7 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        DI.getComponent().inject(this);
+        DI.container(this).inject(this);
         setPreferencesFromResource(R.xml.views_settings, rootKey);
         this._viewModel = ViewModelProviders.of(this, this._factory).get(SettingsViewModel.class);
         this._viewModel.init();
