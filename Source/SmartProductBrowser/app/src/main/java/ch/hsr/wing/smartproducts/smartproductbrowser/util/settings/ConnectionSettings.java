@@ -22,6 +22,17 @@ public class ConnectionSettings implements IConnectionSettings {
         this._settings.setString(DATA_ENDPOINT_KEY, endpoint);
     }
 
+    private static final String DATA_COLLECTION_KEY = "DataCollection";
+    @Override
+    public String getDataCollection() {
+        return this._settings.getString(DATA_COLLECTION_KEY);
+    }
+
+    @Override
+    public void setDataCollection(String collection) {
+        this._settings.setString(DATA_COLLECTION_KEY, collection);
+    }
+
     private static final String PRODUCTS_ENDPOINT_KEY = "ProductsEndpoint";
     @Override
     public String getProductsEndpoint() {

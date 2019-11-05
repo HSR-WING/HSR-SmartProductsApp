@@ -9,12 +9,17 @@
         <EditTextPreference
             app:key="@string/key_data_api_endpoint"
             app:title="@string/settings_item_endpoint"
-
+            app:summary="@string/settings_summary_dataapiendpoint"
+            />
+        <EditTextPreference
+            app:key="@string/key_data_api_collection"
+            app:title="@string/settings_item_collection"
+            app:summary="@string/settings_summary_dataapicollection"
             />
         <Preference
             app:key="@string/key_data_api_test"
             app:title="@string/settings_action_test"
-            app:summary="Tap to test if the endpoint is reachable."
+            app:summary="@string/settings_summary_test"
             />
 
     </PreferenceCategory>
@@ -30,7 +35,7 @@
         <Preference
             app:key="@string/key_product_api_test"
             app:title="@string/settings_action_test"
-            app:summary="Tap to test if the endpoint is reachable."
+            app:summary="@string/settings_summary_test"
             />
 
     </PreferenceCategory>

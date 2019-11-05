@@ -2,34 +2,57 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.util.settings;
 
 import org.junit.Test;
 
+import java.security.InvalidAlgorithmParameterException;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class ConnectionSettingsTest {
 
     @Test
-    public void test_GetDataEndpoint(){
+    public void test_ConnectionSettings_GetDataEndpoint(){
         IAppSettings appSettings = mock(IAppSettings.class);
-        when(appSettings.getString("DataEndpoint")).thenReturn("Data_Endpoint");
+        when(appSettings.getString("DataEndpoint")).thenReturn("Test_Data_Endpoint");
 
         ConnectionSettings settings = new ConnectionSettings(appSettings);
 
-        assertEquals("Data_Endpoint", settings.getDataEndpoint());
+        assertEquals("Test_Data_Endpoint", settings.getDataEndpoint());
     }
 
     @Test
-    public void test_SetDataEndpoint(){
+    public void test_ConnectionSettings_SetDataEndpoint(){
         IAppSettings appSettings = mock(IAppSettings.class);
 
         ConnectionSettings settings = new ConnectionSettings(appSettings);
 
-        settings.setDataEndpoint("Data_Endpoint");
+        settings.setDataEndpoint("Test_Data_Endpoint");
 
-        verify(appSettings).setString("DataEndpoint", "Data_Endpoint");
+        verify(appSettings).setString("DataEndpoint", "Test_Data_Endpoint");
     }
 
     @Test
-    public void test_GetProductsEndpoint(){
+    public void test_ConnectionSettings_GetDataCollection(){
+        IAppSettings appSettings = mock(IAppSettings.class);
+        when(appSettings.getString("DataCollection")).thenReturn("TestColl");
+
+        ConnectionSettings settings = new ConnectionSettings(appSettings);
+
+        assertEquals("TestColl", settings.getDataCollection());
+    }
+
+    @Test
+    public void test_ConnectionSettings_SetDataCollection(){
+        IAppSettings appSettings = mock(IAppSettings.class);
+
+        ConnectionSettings settings = new ConnectionSettings(appSettings);
+
+        settings.setDataCollection("TestColl");
+
+        verify(appSettings).setString("DataCollection", "TestColl");
+    }
+
+    @Test
+    public void test_ConnectionSettings_GetProductsEndpoint(){
         IAppSettings appSettings = mock(IAppSettings.class);
         when(appSettings.getString("ProductsEndpoint")).thenReturn("Products_Endpoint");
 
@@ -39,7 +62,7 @@ public class ConnectionSettingsTest {
     }
 
     @Test
-    public void test_SetProductsEndpoint(){
+    public void test_ConnectionSettings_SetProductsEndpoint(){
         IAppSettings appSettings = mock(IAppSettings.class);
 
         ConnectionSettings settings = new ConnectionSettings(appSettings);

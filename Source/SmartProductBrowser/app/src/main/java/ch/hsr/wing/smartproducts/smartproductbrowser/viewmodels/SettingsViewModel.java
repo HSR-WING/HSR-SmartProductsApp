@@ -11,6 +11,7 @@ public class SettingsViewModel extends BaseViewModel {
     private final IConnectionSettings _settings;
 
     public final ObservableField<String> dataEndpoint = new ObservableField<>();
+    public final ObservableField<String> dataCollection = new ObservableField<>();
     public final ObservableField<String> productEndpoint = new ObservableField<>();
 
     @Inject
@@ -25,6 +26,7 @@ public class SettingsViewModel extends BaseViewModel {
 
     private void loadSettings() {
         this.dataEndpoint.set(this._settings.getDataEndpoint());
+        this.dataCollection.set(this._settings.getDataCollection());
         this.productEndpoint.set(this._settings.getProductsEndpoint());
     }
 
@@ -34,6 +36,7 @@ public class SettingsViewModel extends BaseViewModel {
 
     private void saveSettings(){
         this._settings.setDataEndpoint(this.dataEndpoint.get());
+        this._settings.setDataCollection(this.dataCollection.get());
         this._settings.setProductsEndpoint(this.productEndpoint.get());
     }
 

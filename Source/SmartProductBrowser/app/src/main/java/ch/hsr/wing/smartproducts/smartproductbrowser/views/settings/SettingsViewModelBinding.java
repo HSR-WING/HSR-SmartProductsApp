@@ -30,6 +30,7 @@ public class SettingsViewModelBinding implements SharedPreferences.OnSharedPrefe
     private void init(){
         Resources res = this._ui.getResources();
         this._mappings.put(res.getString(R.string.key_data_api_endpoint), this._viewModel.dataEndpoint);
+        this._mappings.put(res.getString(R.string.key_data_api_collection), this._viewModel.dataCollection);
         this._mappings.put(res.getString(R.string.key_product_api_endpoint), this._viewModel.productEndpoint);
     }
 
