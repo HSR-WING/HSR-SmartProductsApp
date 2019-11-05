@@ -31,9 +31,8 @@ public class ProductCatalogFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
         DI.container(this).inject(this);
+        super.onCreate(savedInstanceState);
 
         this._viewModel = ViewModelProviders.of(this, this._factory).get(ProductCatalogViewModel.class);
         this._viewModel.init();

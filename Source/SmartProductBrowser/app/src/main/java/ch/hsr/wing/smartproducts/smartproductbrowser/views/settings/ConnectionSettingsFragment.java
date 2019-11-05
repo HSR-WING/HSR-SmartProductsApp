@@ -18,7 +18,7 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat {
     private SettingsViewModelBinding _binding;
 
     @Inject
-    public ViewModelProvider.Factory _factory;
+    ViewModelProvider.Factory _factory;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

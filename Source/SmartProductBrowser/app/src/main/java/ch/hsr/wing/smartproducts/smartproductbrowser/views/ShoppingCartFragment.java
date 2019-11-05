@@ -21,7 +21,7 @@ public class ShoppingCartFragment extends Fragment {
     private ShoppingCartViewModel _viewModel;
 
     @Inject
-    public ViewModelProvider.Factory _factory;
+    ViewModelProvider.Factory _factory;
 
     @Override
     public void onAttach(Context activity){
@@ -30,9 +30,8 @@ public class ShoppingCartFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
         DI.container(this).inject(this);
+        super.onCreate(savedInstanceState);
 
         this._viewModel = ViewModelProviders.of(this, this._factory).get(ShoppingCartViewModel.class);
         this._viewModel.init();
