@@ -66,5 +66,6 @@ public class SettingsViewModelBinding implements SharedPreferences.OnSharedPrefe
         ObservableField<String> field = this._mappings.get(key);
         String value = sharedPreferences.getString(key, "");
         field.set(value);
+        this._viewModel.saveChanges();
     }
 }

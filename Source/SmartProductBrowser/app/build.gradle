@@ -20,6 +20,9 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -37,4 +40,5 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.25.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
     implementation 'androidx.preference:preference:1.1.0'
+    testImplementation 'org.mockito:mockito-core:2.+'
 }

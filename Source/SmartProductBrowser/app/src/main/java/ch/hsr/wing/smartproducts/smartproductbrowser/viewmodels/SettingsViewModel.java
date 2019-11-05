@@ -10,8 +10,8 @@ public class SettingsViewModel extends BaseViewModel {
 
     private final IConnectionSettings _settings;
 
-    public ObservableField<String> dataEndpoint = new ObservableField<>();
-    public ObservableField<String> productEndpoint = new ObservableField<>();
+    public final ObservableField<String> dataEndpoint = new ObservableField<>();
+    public final ObservableField<String> productEndpoint = new ObservableField<>();
 
     @Inject
     public SettingsViewModel(IConnectionSettings settings){
@@ -20,8 +20,21 @@ public class SettingsViewModel extends BaseViewModel {
 
     @Override
     protected void onInit() {
-        dataEndpoint.set(this._settings.getDataEndpoint());
-        productEndpoint.set(this._settings.getProductsEndpoint());
+        this.loadSettings();
+    }
+
+    private void loadSettings() {
+        this.dataEndpoint.set(this._settings.getDataEndpoint());
+        this.productEndpoint.set(this._settings.getProductsEndpoint());
+    }
+
+    public void saveChanges(){
+        this.saveSettings();
+    }
+
+    private void saveSettings(){
+        this._settings.setDataEndpoint(this.dataEndpoint.get());
+        this._settings.setProductsEndpoint(this.productEndpoint.get());
     }
 
     @Override
