@@ -1,4 +1,4 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 
-public class ProductApiClient implements IProductApiClient {
+public interface IProductApiClient {
 }
