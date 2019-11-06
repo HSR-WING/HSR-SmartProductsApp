@@ -16,6 +16,11 @@
             app:title="@string/settings_item_collection"
             app:summary="@string/settings_summary_dataapicollection"
             />
+        <DropDownPreference
+            app:key="@string/key_data_api_refreshinterval"
+            app:title="@string/settings_item_refreshinterval"
+            app:summary="@string/settings_summary_dataapirefreshinterval"
+            />
         <Preference
             app:key="@string/key_data_api_test"
             app:title="@string/settings_action_test"
