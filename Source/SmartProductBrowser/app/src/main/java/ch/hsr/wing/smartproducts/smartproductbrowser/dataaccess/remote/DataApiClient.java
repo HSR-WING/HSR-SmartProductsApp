@@ -3,6 +3,7 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.DataDto;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -28,15 +29,21 @@ public class DataApiClient implements IDataApiClient {
 
     private static final String PING_URL = "ping";
     @Override
-    public boolean ping(){
+    public ResponseTypes ping(){
         try {
             HttpUrl.Builder url = this.getApi().addPathSegment(PING_URL);
             Request request = new Request.Builder().url(url.toString()).build();
             try (Response response = this._client.newCall(request).execute()) {
-                return response.isSuccessful();
+                if(response.isSuccessful()){
+                    return ResponseTypes.OK;
+                }
+                if(response.code() >= 500){
+                    return ResponseTypes.SERVER_ERROR;
+                }
+                return ResponseTypes.BAD_REQUEST;
             }
         } catch (Exception ex){
-            return false;
+            return ResponseTypes.UNREACHABLE;
         }
     }
 

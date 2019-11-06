@@ -3,6 +3,7 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.di;
 import javax.inject.Singleton;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.DataAccessModule;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.HttpModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.SettingsModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ViewModelModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.views.ProductCatalogFragment;
@@ -14,7 +15,8 @@ import dagger.Component;
 @Component(modules = {
         SettingsModule.class,
         ViewModelModule.class,
-        DataAccessModule.class})
+        DataAccessModule.class,
+        HttpModule.class})
 public interface IContainer {
     void inject(ConnectionSettingsFragment fragment);
     void inject(ProductCatalogFragment fragment);
