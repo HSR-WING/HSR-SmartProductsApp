@@ -9,21 +9,27 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHandler;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.di.DI;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.SettingsViewModel;
 
-public class ConnectionSettingsFragment extends PreferenceFragmentCompat implements ISettingsUICallback {
+public class ConnectionSettingsFragment extends PreferenceFragmentCompat implements ISettingsUICallback, Preference.OnPreferenceClickListener {
 
     private SettingsViewModel _viewModel;
     private SettingsViewModelBinding _binding;
 
     private final Map<String, SummaryEntry> _summaries = new HashMap<>();
+
+    private final SimpleDateFormat formatter = new SimpleDateFormat("(dd.MM.yyyy HH:mm:ss)");
 
     @Inject
     ViewModelProvider.Factory _factory;
@@ -49,13 +55,66 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
     @Override
     public void onResume(){
         super.onResume();
+        this.registerTestHandlers();
         this._binding.enable();
     }
 
     @Override
     public void onPause(){
         super.onPause();
+        this.unregisterTestHandlers();
         this._binding.disable();
+    }
+
+    private void registerTestHandlers(){
+        this.registerTestHandler(R.string.key_data_api_test);
+    }
+
+    private void registerTestHandler(int key){
+        Preference preference = this.findPreference(this.getString(key));
+        preference.setOnPreferenceClickListener(this);
+    }
+
+    private void unregisterTestHandlers(){
+        this.unregisterTestHandler(R.string.key_data_api_test);
+    }
+
+    private void unregisterTestHandler(int key){
+        Preference preference = this.findPreference(this.getString(key));
+        preference.setOnPreferenceClickListener(null);
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        this.testApi(preference);
+
+        return true;
+    }
+
+    private void testApi(final Preference preference){
+        String key = preference.getKey();
+        if(this.getString(R.string.key_data_api_test).equals(key)){
+            this._viewModel.testDataApi(new ICallbackHandler<ResponseTypes>() {
+                @Override
+                public void handle(ResponseTypes result) {
+                    String summary = getSummaryFor(result);
+                    preference.setSummary(summary);
+                }
+            });
+        }
+        String summary = this.getString(R.string.settings_summary_test);
+        preference.setSummary(summary);
+    }
+
+    private String getSummaryFor(ResponseTypes response){
+        if(response == ResponseTypes.NONE){
+            return this.getString(R.string.settings_summary_test);
+        }
+        String timestamp = " " + formatter.format(new Date());
+        if(response == ResponseTypes.OK){
+            return this.getString(R.string.settings_summary_test_success) + timestamp;
+        }
+        return this.getString(R.string.settings_summary_test_failed) + timestamp;
     }
 
     @Override
@@ -110,4 +169,6 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
         }
         return (T)component;
     }
+
+
 }
