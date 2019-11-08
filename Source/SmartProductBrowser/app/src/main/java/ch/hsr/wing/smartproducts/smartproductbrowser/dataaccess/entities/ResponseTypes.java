@@ -5,5 +5,6 @@ public enum ResponseTypes {
     OK,
     BAD_REQUEST,
     SERVER_ERROR,
-    UNREACHABLE
+    UNREACHABLE,
+    PROCESSING,
 }

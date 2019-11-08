@@ -86,6 +86,9 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
+        String summary = this.getSummaryFor(ResponseTypes.PROCESSING);
+        preference.setSummary(summary);
+
         this.testApi(preference);
 
         return true;
@@ -109,6 +112,9 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
     private String getSummaryFor(ResponseTypes response){
         if(response == ResponseTypes.NONE){
             return this.getString(R.string.settings_summary_test);
+        }
+        if(response == ResponseTypes.PROCESSING){
+            return this.getString(R.string.settings_summary_test_testing);
         }
         String timestamp = " " + formatter.format(new Date());
         if(response == ResponseTypes.OK){

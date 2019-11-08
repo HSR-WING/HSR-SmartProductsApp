@@ -17,7 +17,8 @@
     <string name="settings_summary_dataapicollection_current">Define the collection with the items of your Shopping Cart. Current: </string>
     <string name="settings_action_test">Test API</string>
     <string name="settings_summary_test">Tap to test if the endpoint is reachable.</string>
-    <string name="settings_summary_test_success">Successful</string>
+    <string name="settings_summary_test_testing">Testing...</string>
+    <string name="settings_summary_test_success">Success</string>
     <string name="settings_summary_test_failed">FAILED</string>
     <string name="settings">Settings</string>
 </resources>
