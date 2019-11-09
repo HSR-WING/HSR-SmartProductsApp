@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ContentResponse;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductDto;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductInfoDto;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
@@ -41,26 +42,44 @@ public class ProductApiClient implements IProductApiClient {
                 if(response.isSuccessful()){
                     return ResponseTypes.OK;
                 }
-                if(response.code() >= 500){
-                    return ResponseTypes.SERVER_ERROR;
-                }
-                return ResponseTypes.BAD_REQUEST;
+                return this.toResponseType(response.code());
             }
         } catch (Exception ex){
             return ResponseTypes.UNREACHABLE;
         }
     }
 
-    
+    private static final String ALL_PRODUCTS = "products";
     @Override
-    public List<ProductInfoDto> getAllProducts() {
+    public ContentResponse<List<ProductInfoDto>> getAllProducts() {
+        try{
+            HttpUrl.Builder url = this.getApi().addPathSegment(ALL_PRODUCTS);
+            Request request = new Request.Builder().url(url.toString()).build();
+            try(Response response = this._client.newCall(request).execute()){
+                if(!response.isSuccessful()){
+                    return this.noSuccess(response);
+                }
+                return new ContentResponse<>(ResponseTypes.OK);
+            }
+        } catch (Exception ex){
+            return new ContentResponse<>(ResponseTypes.UNREACHABLE);
+        }
+    }
+
+    private static final String PRODUCT_BY_ID = "products";
+    @Override
+    public ContentResponse<ProductDto> getDetailsOfProductById(UUID productId) {
         return null;
     }
 
-    @Override
-    public ProductDto getDetailsOfProductById(UUID productId) {
-        return null;
+    private <T> ContentResponse<T> noSuccess(Response response){
+        return new ContentResponse<>(this.toResponseType(response.code()));
     }
 
-
+    private ResponseTypes toResponseType(int statusCode){
+        if(statusCode >= 500){
+            return ResponseTypes.SERVER_ERROR;
+        }
+        return ResponseTypes.BAD_REQUEST;
+    }
 }
