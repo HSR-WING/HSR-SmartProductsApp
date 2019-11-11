@@ -19,7 +19,7 @@ public class ContentResponse<T> {
     }
 
     public boolean hasContent(){
-        return this._content == null;
+        return this._content != null;
     }
 
     public T getContent(){

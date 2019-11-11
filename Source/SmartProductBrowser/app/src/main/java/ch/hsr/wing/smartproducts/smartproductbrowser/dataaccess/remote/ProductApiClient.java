@@ -1,5 +1,11 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
+
+import java.io.InvalidObjectException;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,9 +17,11 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.Product
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ProductApiClient implements IProductApiClient {
 
@@ -59,10 +67,23 @@ public class ProductApiClient implements IProductApiClient {
                 if(!response.isSuccessful()){
                     return this.noSuccess(response);
                 }
-                return new ContentResponse<>(ResponseTypes.OK);
+                List<ProductInfoDto> dtos = this.parseJsonToProductInfo(response.body());
+                return new ContentResponse<>(ResponseTypes.OK, dtos);
             }
         } catch (Exception ex){
             return new ContentResponse<>(ResponseTypes.UNREACHABLE);
+        }
+    }
+
+    private List<ProductInfoDto> parseJsonToProductInfo(ResponseBody body){
+        if(!body.contentType().equals(MediaType.get("application/json"))){
+            throw new JsonParseException("Content is not JSON.");
+        }
+        try {
+            ProductInfoDto[] content = new Gson().fromJson(body.string(), ProductInfoDto[].class);
+            return new LinkedList<>(Arrays.asList(content));
+        } catch (Exception ex) {
+            throw new JsonParseException("Cannot parse ProductInfo.", ex);
         }
     }
 

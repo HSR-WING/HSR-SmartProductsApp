@@ -89,7 +89,7 @@ public class ProductApiClientTest {
     public void test_ProductApiClient_Products() throws Exception{
         MockWebServer server = new MockWebServer();
 
-        MockResponse response = new MockResponse().setResponseCode(200);
+        MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json").setBody("[]");
         server.enqueue(response);
 
         server.start();
@@ -112,6 +112,8 @@ public class ProductApiClientTest {
         UUID pid = UUID.randomUUID();
         JsonObject jsonProduct = new JsonObject();
         jsonProduct.addProperty("Id", pid.toString());
+        jsonProduct.addProperty("Name", "Coffee");
+        jsonProduct.addProperty("ImageUrl", "http://coff.ee");
 
         JsonArray jsonProducts = new JsonArray();
         jsonProducts.add(jsonProduct);
@@ -129,6 +131,7 @@ public class ProductApiClientTest {
 
         ContentResponse<List<ProductInfoDto>> result = client.getAllProducts();
 
+        assertEquals(ResponseTypes.OK, result.getResponseType());
         assertTrue(result.hasContent());
         assertEquals(1, result.getContent().size());
 
