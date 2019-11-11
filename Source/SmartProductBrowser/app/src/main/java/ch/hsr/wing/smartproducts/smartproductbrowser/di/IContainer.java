@@ -3,7 +3,8 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.di;
 import javax.inject.Singleton;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.BusinessModule;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.DataAccessModule;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.LocalDataAccessModule;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.RemoteDataAccessModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.HttpModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.SettingsModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ViewModelModule;
@@ -16,7 +17,8 @@ import dagger.Component;
 @Component(modules = {
         SettingsModule.class,
         ViewModelModule.class,
-        DataAccessModule.class,
+        RemoteDataAccessModule.class,
+        LocalDataAccessModule.class,
         HttpModule.class,
         BusinessModule.class})
 public interface IContainer {
