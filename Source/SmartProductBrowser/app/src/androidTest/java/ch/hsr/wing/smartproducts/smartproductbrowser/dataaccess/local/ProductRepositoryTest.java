@@ -115,4 +115,84 @@ public class ProductRepositoryTest {
 
         assertNull(product);
     }
+
+    @Test
+    public void test_ProductRepository_Update_Null(){
+        AppDatabase db = this.getDb();
+
+        ProductRepository repo = new ProductRepository(db);
+
+        repo.update(null);
+
+        assertTrue(db.products().getAll().isEmpty());
+    }
+
+    @Test
+    public void test_ProductRepository_Update_Existing(){
+        AppDatabase db = this.getDb();
+
+        UUID id = UUID.randomUUID();
+        Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
+        db.products().insert(dbProduct);
+
+        ProductRepository repo = new ProductRepository(db);
+
+        Product product = new Product(id, "Coffee", "http://coff.ee");
+        product.setArticleNumber("co-0042");
+        product.setPrice(42.21);
+
+        repo.update(product);
+
+        dbProduct = db.products().getById(id).get(0);
+
+        assertEquals("co-0042", dbProduct.getArticleNumber());
+        assertEquals(42.21, dbProduct.getPrice(), .0001);
+    }
+
+    @Test
+    public void test_ProductRepository_Update_New(){
+        AppDatabase db = this.getDb();
+
+        ProductRepository repo = new ProductRepository(db);
+
+        UUID id = UUID.randomUUID();
+        Product product = new Product(id, "Chips", "");
+        product.setArticleNumber("ch-1337");
+        product.setWeight(1337);
+
+        repo.update(product);
+
+        Product dbProduct = db.products().getById(id).get(0);
+
+        assertEquals("Chips", dbProduct.getName());
+        assertEquals("ch-1337", dbProduct.getArticleNumber());
+        assertEquals(1337, dbProduct.getWeight(), .0001);
+    }
+
+    @Test
+    public void test_ProductRepository_Delete_NonExisting(){
+        AppDatabase db = this.getDb();
+
+        ProductRepository repo = new ProductRepository(db);
+
+        boolean success = repo.delete(UUID.randomUUID());
+
+        assertFalse(success);
+    }
+
+    @Test
+    public void test_ProductRepository_Delete_Existing(){
+        AppDatabase db = this.getDb();
+
+        UUID id = UUID.randomUUID();
+        Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
+        db.products().insert(dbProduct);
+
+        ProductRepository repo = new ProductRepository(db);
+
+        boolean success = repo.delete(id);
+
+        assertTrue(success);
+        assertTrue(db.products().getAll().isEmpty());
+    }
 }

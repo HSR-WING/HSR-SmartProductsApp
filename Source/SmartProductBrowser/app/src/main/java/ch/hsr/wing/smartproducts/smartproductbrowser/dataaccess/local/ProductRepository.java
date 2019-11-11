@@ -40,12 +40,23 @@ public class ProductRepository implements IProductRepository {
 
     @Override
     public void update(Product product) {
-
+        if(product == null){
+            return;
+        }
+        if(this.exists(product.getId())){
+            this._db.products().update(product);
+        } else {
+            this._db.products().insert(product);
+        }
     }
 
     @Override
     public boolean delete(UUID productId) {
-        return false;
+        if(!this.exists(productId)){
+           return false;
+        }
+        this._db.products().delete(Product.getDeletable(productId));
+        return !this.exists(productId);
     }
 
     @Override
