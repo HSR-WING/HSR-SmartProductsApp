@@ -98,7 +98,7 @@ public class ProductApiClient implements IProductApiClient {
 
 
     private <T> T parseJsonTo(Class<T> c, ResponseBody body){
-        if(!body.contentType().equals(MediaType.get("application/json"))){
+        if(!this.isJson(body)){
             throw new JsonParseException("Content is not JSON.");
         }
         try {
@@ -107,6 +107,13 @@ public class ProductApiClient implements IProductApiClient {
         } catch (Exception ex) {
             throw new JsonParseException("Cannot parse ProductInfo.", ex);
         }
+    }
+
+    private boolean isJson(ResponseBody body){
+        MediaType expectedType = MediaType.get("application/json");
+        MediaType actualtype = body.contentType();
+        return actualtype.type().equals(expectedType.type())
+                && actualtype.subtype().equals(expectedType.subtype());
     }
 
     private <T> ContentResponse<T> noSuccess(Response response){

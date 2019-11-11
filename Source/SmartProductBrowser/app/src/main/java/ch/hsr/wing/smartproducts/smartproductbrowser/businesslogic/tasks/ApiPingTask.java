@@ -6,7 +6,7 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHand
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IApiClient;
 
-class ApiPingTask extends AsyncTask<Void, Void, ResponseTypes> implements ITask<Void> {
+class ApiPingTask extends AsyncTask<Void, Void, ResponseTypes> implements ITask {
 
     private final IApiClient _client;
     private final ICallbackHandler<ResponseTypes> _callback;
@@ -27,7 +27,7 @@ class ApiPingTask extends AsyncTask<Void, Void, ResponseTypes> implements ITask<
     }
 
     @Override
-    public void run(Void... voids) {
-        this.execute(voids);
+    public void run() {
+        this.execute();
     }
 }

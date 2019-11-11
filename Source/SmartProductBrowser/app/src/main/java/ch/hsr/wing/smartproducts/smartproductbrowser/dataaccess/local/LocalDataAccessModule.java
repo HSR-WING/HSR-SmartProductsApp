@@ -21,4 +21,9 @@ public class LocalDataAccessModule {
     public IFileSystem getFileSystem(IApp app){
         return new FileSystem(app);
     }
+
+    @Provides
+    public IProductRepository getProductRepo(AppDatabase db, IFileSystem fileSystem){
+        return new ProductRepository(db, fileSystem);
+    }
 }

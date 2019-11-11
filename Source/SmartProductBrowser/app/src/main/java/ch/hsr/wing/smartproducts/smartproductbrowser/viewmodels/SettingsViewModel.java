@@ -54,12 +54,12 @@ public class SettingsViewModel extends BaseViewModel {
     }
 
     public void testDataApi(ICallbackHandler<ResponseTypes> callback){
-        ITask<Void> task = this._tasks.createPingTask(this._dataApiClient, callback);
+        ITask task = this._tasks.createPingTask(this._dataApiClient, callback);
         task.run();
     }
 
     public void testProductApi(ICallbackHandler<ResponseTypes> callback){
-        ITask<Void> task = this._tasks.createPingTask(this._productApiClient, callback);
+        ITask task = this._tasks.createPingTask(this._productApiClient, callback);
         task.run();
     }
 
