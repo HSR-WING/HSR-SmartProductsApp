@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHandler;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITask;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITaskFactory;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IDataApiClient;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IProductApiClient;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;

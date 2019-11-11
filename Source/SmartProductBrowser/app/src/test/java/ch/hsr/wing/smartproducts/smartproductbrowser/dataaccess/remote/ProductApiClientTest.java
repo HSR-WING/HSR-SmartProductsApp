@@ -3,17 +3,15 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.UUID;
 
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ContentResponse;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductDto;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductInfoDto;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ContentResponse;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ProductDto;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ProductInfoDto;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.OkHttpClient;
 import okhttp3.mockwebserver.MockResponse;

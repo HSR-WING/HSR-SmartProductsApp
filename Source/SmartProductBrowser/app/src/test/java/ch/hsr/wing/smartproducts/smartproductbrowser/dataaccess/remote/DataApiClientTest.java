@@ -2,7 +2,7 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 
 import org.junit.Test;
 
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.OkHttpClient;
 import okhttp3.mockwebserver.MockResponse;

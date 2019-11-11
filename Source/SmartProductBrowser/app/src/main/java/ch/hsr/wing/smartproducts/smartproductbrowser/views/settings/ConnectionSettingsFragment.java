@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHandler;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.di.DI;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.SettingsViewModel;
 
