@@ -3,18 +3,16 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 
-import java.io.InvalidObjectException;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ContentResponse;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductDto;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductInfoDto;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ContentResponse;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ProductDto;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ProductInfoDto;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;

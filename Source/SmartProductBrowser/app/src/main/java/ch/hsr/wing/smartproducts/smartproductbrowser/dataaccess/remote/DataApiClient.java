@@ -2,8 +2,8 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 
 import javax.inject.Inject;
 
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.DataDto;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.DataDto;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;

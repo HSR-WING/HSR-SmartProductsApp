@@ -1,4 +1,4 @@
-package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities;
+package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities;
 
 public class ContentResponse<T> {
     private final ResponseTypes _type;

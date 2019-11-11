@@ -1,6 +1,5 @@
-package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities;
+package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.UUID;
