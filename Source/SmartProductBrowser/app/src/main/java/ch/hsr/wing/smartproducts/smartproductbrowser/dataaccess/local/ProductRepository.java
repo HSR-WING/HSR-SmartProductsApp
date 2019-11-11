@@ -1,13 +1,17 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
+import ch.hsr.wing.smartproducts.smartproductbrowser.util.ImageUtil;
 
 public class ProductRepository implements IProductRepository {
     private final AppDatabase _db;
@@ -61,13 +65,28 @@ public class ProductRepository implements IProductRepository {
         return !this.exists(productId);
     }
 
+
+    private static final String IMAGES_FOLDER = "ProductImages";
+    private static final String IMAGE_FILE_EXTENSION = ".png";
     @Override
     public Bitmap getImageOf(UUID productId) {
-        return null;
+        String filename = this.toFilename(productId, IMAGE_FILE_EXTENSION);
+        byte[] content = this._fileSystem.load(IMAGES_FOLDER, filename);
+        return BitmapFactory.decodeByteArray(content,0,content.length);
     }
 
     @Override
     public void storeImageOf(UUID productId, Bitmap image) {
+        try {
+            String filename = this.toFilename(productId, IMAGE_FILE_EXTENSION);
+            byte[] content = ImageUtil.toByteArray(image);
+            this._fileSystem.store(IMAGES_FOLDER, filename, content);
+        } catch (Throwable ex){
+            ex.printStackTrace();
+        }
+    }
 
+    private String toFilename(UUID id, String fileExtension){
+        return id.toString() + fileExtension;
     }
 }

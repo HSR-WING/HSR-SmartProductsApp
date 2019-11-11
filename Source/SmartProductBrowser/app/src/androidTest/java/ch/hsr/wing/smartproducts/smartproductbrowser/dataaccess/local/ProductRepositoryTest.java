@@ -1,6 +1,11 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Picture;
 
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
@@ -9,12 +14,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.io.IOError;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.UUID;
 
 import javax.inject.Provider;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
+import ch.hsr.wing.smartproducts.smartproductbrowser.util.ImageUtil;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -194,5 +203,67 @@ public class ProductRepositoryTest {
 
         assertTrue(success);
         assertTrue(db.products().getAll().isEmpty());
+    }
+
+    @Test
+    public void test_ProductRepository_GetImage() throws IOException {
+
+        IFileSystem fileSystem = mock(IFileSystem.class);
+        UUID id = UUID.randomUUID();
+        String imageName = id.toString() + ".png";
+        Bitmap img = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888);
+        img.setPixel(0,0, Color.BLUE);
+        byte[] imgBytes = ImageUtil.toByteArray(img);
+        when(fileSystem.load("ProductImages", imageName)).thenReturn(imgBytes);
+
+        ProductRepository repo = new ProductRepository(mock(AppDatabase.class), fileSystem);
+
+        Bitmap image = repo.getImageOf(id);
+
+        assertNotNull(image);
+        verify(fileSystem).load("ProductImages", imageName);
+    }
+
+    @Test
+    public void test_ProductRepository_StoreImage(){
+        IFileSystem fileSystem = mock(IFileSystem.class);
+        UUID id = UUID.randomUUID();
+        String imageName = id.toString() + ".png";
+
+        ProductRepository repo = new ProductRepository(mock(AppDatabase.class), fileSystem);
+        Bitmap bitmap = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888);
+        bitmap.setPixel(0,0, Color.RED);
+        repo.storeImageOf(id, bitmap);
+
+        verify(fileSystem).store(eq("ProductImages"), eq(imageName), any(byte[].class));
+    }
+
+    private IApp getApp(){
+        return new IApp() {
+            @Override
+            public Context getAppContext() {
+                return ApplicationProvider.getApplicationContext();
+            }
+
+            @Override
+            public SharedPreferences getSettings() {
+                return null;
+            }
+        };
+    }
+
+    @Test
+    public void test_ProductRepository_StoreAndLoadImage(){
+        ProductRepository repo = new ProductRepository(mock(AppDatabase.class), new FileSystem(this.getApp()));
+        Bitmap bitmap = Bitmap.createBitmap(1,1, Bitmap.Config.ARGB_8888);
+        bitmap.setPixel(0,0, Color.GREEN);
+
+        UUID id = UUID.randomUUID();
+
+        repo.storeImageOf(id, bitmap);
+
+        Bitmap result = repo.getImageOf(id);
+
+        assertEquals(Color.GREEN, result.getPixel(0,0));
     }
 }
