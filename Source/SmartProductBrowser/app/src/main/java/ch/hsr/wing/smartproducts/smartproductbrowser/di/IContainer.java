@@ -2,6 +2,7 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.di;
 
 import javax.inject.Singleton;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.AppModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.BusinessModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.LocalDataAccessModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.RemoteDataAccessModule;
@@ -15,6 +16,7 @@ import dagger.Component;
 
 @Singleton
 @Component(modules = {
+        AppModule.class,
         SettingsModule.class,
         ViewModelModule.class,
         RemoteDataAccessModule.class,

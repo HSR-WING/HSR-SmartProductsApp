@@ -1,25 +1,18 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.util.settings;
 
-import android.content.SharedPreferences;
-
 import javax.inject.Singleton;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class SettingsModule {
 
-    private final SharedPreferences _settings;
-
-    public SettingsModule(SharedPreferences settings){
-        this._settings = settings;
-    }
-
     @Provides
     @Singleton
-    public AppSettings getAppSettingsWrapper(){
-        return new AppSettings(this._settings);
+    public AppSettings getAppSettingsWrapper(IApp app){
+        return new AppSettings(app);
     }
 
     @Provides

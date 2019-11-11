@@ -6,6 +6,7 @@ import android.app.Application;
 import androidx.fragment.app.Fragment;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.App;
+import ch.hsr.wing.smartproducts.smartproductbrowser.AppModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.LocalDataAccessModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.SettingsModule;
 
@@ -13,8 +14,7 @@ public class DI {
 
     public static IContainer setup(App app){
         return DaggerIContainer.builder()
-                .settingsModule(new SettingsModule(app.getSettings()))
-                .localDataAccessModule(new LocalDataAccessModule(app.getApplicationContext()))
+                .appModule(new AppModule(app))
                 .build();
     }
 
