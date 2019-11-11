@@ -9,12 +9,14 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITask;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITaskFactory;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IDataApiClient;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IProductApiClient;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 
 public class SettingsViewModel extends BaseViewModel {
 
     private final IConnectionSettings _settings;
     private final IDataApiClient _dataApiClient;
+    private final IProductApiClient _productApiClient;
 
     private final ITaskFactory _tasks;
 
@@ -23,10 +25,11 @@ public class SettingsViewModel extends BaseViewModel {
     public final ObservableField<String> productEndpoint = new ObservableField<>();
 
     @Inject
-    public SettingsViewModel(IConnectionSettings settings, ITaskFactory tasks, IDataApiClient dataApiClient){
+    public SettingsViewModel(IConnectionSettings settings, ITaskFactory tasks, IDataApiClient dataApiClient, IProductApiClient productApiClient){
         this._settings = settings;
         this._tasks = tasks;
         this._dataApiClient = dataApiClient;
+        this._productApiClient = productApiClient;
     }
 
     @Override
@@ -52,6 +55,11 @@ public class SettingsViewModel extends BaseViewModel {
 
     public void testDataApi(ICallbackHandler<ResponseTypes> callback){
         ITask<Void> task = this._tasks.createPingTask(this._dataApiClient, callback);
+        task.run();
+    }
+
+    public void testProductApi(ICallbackHandler<ResponseTypes> callback){
+        ITask<Void> task = this._tasks.createPingTask(this._productApiClient, callback);
         task.run();
     }
 

@@ -68,6 +68,7 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
 
     private void registerTestHandlers(){
         this.registerTestHandler(R.string.key_data_api_test);
+        this.registerTestHandler(R.string.key_product_api_test);
     }
 
     private void registerTestHandler(int key){
@@ -77,6 +78,7 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
 
     private void unregisterTestHandlers(){
         this.unregisterTestHandler(R.string.key_data_api_test);
+        this.unregisterTestHandler(R.string.key_product_api_test);
     }
 
     private void unregisterTestHandler(int key){
@@ -98,6 +100,15 @@ public class ConnectionSettingsFragment extends PreferenceFragmentCompat impleme
         String key = preference.getKey();
         if(this.getString(R.string.key_data_api_test).equals(key)){
             this._viewModel.testDataApi(new ICallbackHandler<ResponseTypes>() {
+                @Override
+                public void handle(ResponseTypes result) {
+                    String summary = getSummaryFor(result);
+                    preference.setSummary(summary);
+                }
+            });
+        }
+        else if(this.getString(R.string.key_product_api_test).equals(key)){
+            this._viewModel.testProductApi(new ICallbackHandler<ResponseTypes>() {
                 @Override
                 public void handle(ResponseTypes result) {
                     String summary = getSummaryFor(result);

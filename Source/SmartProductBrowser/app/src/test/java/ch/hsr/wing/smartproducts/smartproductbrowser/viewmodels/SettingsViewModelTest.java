@@ -9,6 +9,7 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITask;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITaskFactory;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IDataApiClient;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IProductApiClient;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
 import okhttp3.Response;
 
@@ -22,7 +23,7 @@ public class SettingsViewModelTest {
         IConnectionSettings settings = mock(IConnectionSettings.class);
         when(settings.getDataEndpoint()).thenReturn("Data_Endpoint");
 
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         assertEquals("Data_Endpoint", vm.dataEndpoint.get());
@@ -31,7 +32,7 @@ public class SettingsViewModelTest {
     @Test
     public void test_SettingsViewModel_DataEndpoint_NoChanges(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         vm.dataEndpoint.set("test");
@@ -42,7 +43,7 @@ public class SettingsViewModelTest {
     @Test
     public void test_SettingsViewModel_DataEndpoint_SaveChanges(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         vm.dataEndpoint.set("test");
@@ -57,7 +58,7 @@ public class SettingsViewModelTest {
         IConnectionSettings settings = mock(IConnectionSettings.class);
         when(settings.getDataCollection()).thenReturn("TestColl");
 
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         assertEquals("TestColl", vm.dataCollection.get());
@@ -66,7 +67,7 @@ public class SettingsViewModelTest {
     @Test
     public void test_SettingsViewModel_DataCollection_NoChanges(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         vm.dataCollection.set("test");
@@ -77,7 +78,7 @@ public class SettingsViewModelTest {
     @Test
     public void test_SettingsViewModel_DataCollection_SaveChanges(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         vm.dataCollection.set("TestColl");
@@ -89,18 +90,36 @@ public class SettingsViewModelTest {
 
     @Test
     public void test_SettingsViewModel_TestDataApi(){
-        /*IConnectionSettings settings = mock(IConnectionSettings.class);
+        IConnectionSettings settings = mock(IConnectionSettings.class);
         ITaskFactory factory = mock(ITaskFactory.class);
         ITask<Void> task = mock(ITask.class);
         IDataApiClient client = mock(IDataApiClient.class);
-        when(factory.createPingTask(eq(client), any(ICallbackHandler.class))).thenReturn(task);
+        ICallbackHandler<ResponseTypes> callback = new NullCallbackHandler<>();
+        when(factory.createPingTask(client, callback)).thenReturn(task);
 
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), client);
+        SettingsViewModel vm = new SettingsViewModel(settings, factory, client, mock(IProductApiClient.class));
         vm.init();
 
-        vm.testDataApi(null);
+        vm.testDataApi(callback);
 
-        verify(factory).createPingTask(eq(client), any(ICallbackHandler.class));*/
+        verify(factory).createPingTask(client, callback);
+    }
+
+    @Test
+    public void test_SettingsViewModel_TestProductApi(){
+        IConnectionSettings settings = mock(IConnectionSettings.class);
+        ITaskFactory factory = mock(ITaskFactory.class);
+        ITask<Void> task = mock(ITask.class);
+        IProductApiClient client = mock(IProductApiClient.class);
+        ICallbackHandler<ResponseTypes> callback = new NullCallbackHandler<>();
+        when(factory.createPingTask(client, callback)).thenReturn(task);
+
+        SettingsViewModel vm = new SettingsViewModel(settings, factory, mock(IDataApiClient.class), client);
+        vm.init();
+
+        vm.testProductApi(callback);
+
+        verify(factory).createPingTask(client, callback);
     }
 
     @Test
@@ -108,7 +127,7 @@ public class SettingsViewModelTest {
         IConnectionSettings settings = mock(IConnectionSettings.class);
         when(settings.getProductsEndpoint()).thenReturn("Products_Endpoint");
 
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         assertEquals("Products_Endpoint", vm.productEndpoint.get());
@@ -117,7 +136,7 @@ public class SettingsViewModelTest {
     @Test
     public void test_SettingsViewModel_ProductEndpoint_NoChanges(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         vm.productEndpoint.set("test");
@@ -128,7 +147,7 @@ public class SettingsViewModelTest {
     @Test
     public void test_SettingsViewModel_ProductEndpoint_SaveChanges(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
-        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class));
+        SettingsViewModel vm = new SettingsViewModel(settings, mock(ITaskFactory.class), mock(IDataApiClient.class), mock(IProductApiClient.class));
         vm.init();
 
         vm.productEndpoint.set("test");
