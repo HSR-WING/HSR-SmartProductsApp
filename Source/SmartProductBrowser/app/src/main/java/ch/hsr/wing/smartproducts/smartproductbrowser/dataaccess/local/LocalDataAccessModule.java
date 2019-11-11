@@ -16,4 +16,9 @@ public class LocalDataAccessModule {
     public AppDatabase getDatabase(IApp app){
         return Room.databaseBuilder(app.getAppContext(), AppDatabase.class, "SmartProductsDB").build();
     }
+
+    @Provides
+    public IFileSystem getFileSystem(IApp app){
+        return new FileSystem(app);
+    }
 }
