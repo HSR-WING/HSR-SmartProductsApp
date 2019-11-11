@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ContentResponse;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductDto;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ProductInfoDto;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
@@ -139,5 +140,122 @@ public class ProductApiClientTest {
         assertEquals(pid, product.getId());
         assertEquals("Coffee", product.getName());
         assertEquals("http://coff.ee", product.getImageUrl());
+    }
+
+    @Test
+    public void test_ProductApiClient_Products_Content_MultipleObjects() throws Exception{
+        MockWebServer server = new MockWebServer();
+
+        UUID pid1 = UUID.randomUUID();
+        JsonObject jsonProduct1 = new JsonObject();
+        jsonProduct1.addProperty("Id", pid1.toString());
+        jsonProduct1.addProperty("Name", "Coffee");
+        jsonProduct1.addProperty("ImageUrl", "http://coff.ee");
+
+        UUID pid2 = UUID.randomUUID();
+        JsonObject jsonProduct2 = new JsonObject();
+        jsonProduct2.addProperty("Id", pid2.toString());
+        jsonProduct2.addProperty("Name", "Chips");
+        jsonProduct2.addProperty("ImageUrl", "http://chi.ps");
+
+        JsonArray jsonProducts = new JsonArray();
+        jsonProducts.add(jsonProduct1);
+        jsonProducts.add(jsonProduct2);
+
+        String jsonResponse = jsonProducts.toString();
+        MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json").setBody(jsonResponse);
+        server.enqueue(response);
+
+        server.start();
+
+        IConnectionSettings settings = mock(IConnectionSettings.class);
+        when(settings.getProductsEndpoint()).thenReturn(server.url("/").toString());
+
+        ProductApiClient client = new ProductApiClient(settings, new OkHttpClient());
+
+        ContentResponse<List<ProductInfoDto>> result = client.getAllProducts();
+
+        assertEquals(ResponseTypes.OK, result.getResponseType());
+        assertTrue(result.hasContent());
+        assertEquals(2, result.getContent().size());
+
+        ProductInfoDto firstProduct = result.getContent().get(0);
+        assertEquals(pid1, firstProduct.getId());
+        assertEquals("Coffee", firstProduct.getName());
+        assertEquals("http://coff.ee", firstProduct.getImageUrl());
+
+        ProductInfoDto secondProduct = result.getContent().get(1);
+        assertEquals(pid2, secondProduct.getId());
+        assertEquals("Chips", secondProduct.getName());
+        assertEquals("http://chi.ps", secondProduct.getImageUrl());
+    }
+
+    @Test
+    public void test_ProductApiClient_Product_ById_StatusCode() throws Exception{
+        MockWebServer server = new MockWebServer();
+
+        UUID pid = UUID.randomUUID();
+        JsonObject jsonProduct = new JsonObject();
+
+        String jsonResponse = jsonProduct.toString();
+        MockResponse response = new MockResponse()
+                .setResponseCode(200)
+                .setHeader("Content-Type", "application/json")
+                .setBody(jsonResponse);
+        server.enqueue(response);
+
+        server.start();
+
+        IConnectionSettings settings = mock(IConnectionSettings.class);
+        when(settings.getProductsEndpoint()).thenReturn(server.url("/").toString());
+
+        ProductApiClient client = new ProductApiClient(settings, new OkHttpClient());
+
+        ContentResponse<ProductDto> result = client.getDetailsOfProductById(pid);
+
+        assertEquals(ResponseTypes.OK, result.getResponseType());
+    }
+
+    @Test
+    public void test_ProductApiClient_Product_ById_Content() throws Exception{
+        MockWebServer server = new MockWebServer();
+
+        UUID pid = UUID.randomUUID();
+        JsonObject jsonProduct = new JsonObject();
+        jsonProduct.addProperty("Id", pid.toString());
+        jsonProduct.addProperty("ArticleNumber", "co-0042");
+        jsonProduct.addProperty("Name", "Coffee");
+        jsonProduct.addProperty("ImageUrl", "http://coff.ee");
+        jsonProduct.addProperty("Price", 42.21);
+        jsonProduct.addProperty("Weight", 1337.0);
+        jsonProduct.addProperty("Retailer", "Migros");
+
+        String jsonResponse = jsonProduct.toString();
+        MockResponse response = new MockResponse()
+                .setResponseCode(200)
+                .setHeader("Content-Type", "application/json")
+                .setBody(jsonResponse);
+        server.enqueue(response);
+
+        server.start();
+
+        IConnectionSettings settings = mock(IConnectionSettings.class);
+        when(settings.getProductsEndpoint()).thenReturn(server.url("/").toString());
+
+        ProductApiClient client = new ProductApiClient(settings, new OkHttpClient());
+
+        ContentResponse<ProductDto> result = client.getDetailsOfProductById(pid);
+
+        assertEquals(ResponseTypes.OK, result.getResponseType());
+        assertTrue(result.hasContent());
+
+        ProductDto product = result.getContent();
+        assertEquals(pid, product.getId());
+        assertEquals("co-0042", product.getArticleNumber());
+        assertEquals("Coffee", product.getName());
+        assertEquals("http://coff.ee", product.getImageUrl());
+        assertEquals(42.21, product.getPrice(), .0001);
+        assertEquals(1337.0, product.getWeight(), .0001);
+        assertEquals("Migros", product.getRetailer());
     }
 }

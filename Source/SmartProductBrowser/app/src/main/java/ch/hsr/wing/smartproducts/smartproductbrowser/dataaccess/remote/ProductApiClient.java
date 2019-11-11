@@ -67,30 +67,48 @@ public class ProductApiClient implements IProductApiClient {
                 if(!response.isSuccessful()){
                     return this.noSuccess(response);
                 }
-                List<ProductInfoDto> dtos = this.parseJsonToProductInfo(response.body());
-                return new ContentResponse<>(ResponseTypes.OK, dtos);
+                ProductInfoDto[] dtos = this.parseJsonTo(ProductInfoDto[].class, response.body());
+                return new ContentResponse<>(ResponseTypes.OK, Arrays.asList(dtos));
             }
+        } catch (JsonParseException ex) {
+            return new ContentResponse<>(ResponseTypes.BAD_RESPONSE);
         } catch (Exception ex){
             return new ContentResponse<>(ResponseTypes.UNREACHABLE);
-        }
-    }
-
-    private List<ProductInfoDto> parseJsonToProductInfo(ResponseBody body){
-        if(!body.contentType().equals(MediaType.get("application/json"))){
-            throw new JsonParseException("Content is not JSON.");
-        }
-        try {
-            ProductInfoDto[] content = new Gson().fromJson(body.string(), ProductInfoDto[].class);
-            return new LinkedList<>(Arrays.asList(content));
-        } catch (Exception ex) {
-            throw new JsonParseException("Cannot parse ProductInfo.", ex);
         }
     }
 
     private static final String PRODUCT_BY_ID = "products";
     @Override
     public ContentResponse<ProductDto> getDetailsOfProductById(UUID productId) {
-        return null;
+        try{
+            HttpUrl.Builder url = this.getApi().addPathSegment(PRODUCT_BY_ID)
+                    .addPathSegment(productId.toString());
+            Request request = new Request.Builder().url(url.toString()).build();
+            try(Response response = this._client.newCall(request).execute()){
+                if(!response.isSuccessful()){
+                    return this.noSuccess(response);
+                }
+                ProductDto dto = this.parseJsonTo(ProductDto.class, response.body());
+                return new ContentResponse<>(ResponseTypes.OK, dto);
+            }
+        } catch (JsonParseException ex) {
+            return new ContentResponse<>(ResponseTypes.BAD_RESPONSE);
+        } catch (Exception ex){
+            return new ContentResponse<>(ResponseTypes.UNREACHABLE);
+        }
+    }
+
+
+    private <T> T parseJsonTo(Class<T> c, ResponseBody body){
+        if(!body.contentType().equals(MediaType.get("application/json"))){
+            throw new JsonParseException("Content is not JSON.");
+        }
+        try {
+            T content = new Gson().fromJson(body.string(), c);
+            return content;
+        } catch (Exception ex) {
+            throw new JsonParseException("Cannot parse ProductInfo.", ex);
+        }
     }
 
     private <T> ContentResponse<T> noSuccess(Response response){
