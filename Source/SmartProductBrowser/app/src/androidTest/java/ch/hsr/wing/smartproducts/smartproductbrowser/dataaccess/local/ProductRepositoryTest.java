@@ -27,7 +27,7 @@ public class ProductRepositoryTest {
 
     @Test
     public void test_ProductRepository_GetAll_Empty(){
-        ProductRepository repo = new ProductRepository(this.getDb());
+        ProductRepository repo = new ProductRepository(this.getDb(), mock(IFileSystem.class));
 
         Iterable<Product> products = repo.getAll();
 
@@ -42,7 +42,7 @@ public class ProductRepositoryTest {
         Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
         db.products().insert(dbProduct);
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         Iterable<Product> products = repo.getAll();
         Iterator<Product> it = products.iterator();
@@ -62,7 +62,7 @@ public class ProductRepositoryTest {
         Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
         db.products().insert(dbProduct);
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         boolean exists = repo.exists(id);
         assertTrue(exists);
@@ -76,7 +76,7 @@ public class ProductRepositoryTest {
         Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
         db.products().insert(dbProduct);
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         boolean exists = repo.exists(UUID.randomUUID());
         assertFalse(exists);
@@ -91,7 +91,7 @@ public class ProductRepositoryTest {
         db.products().insert(dbProduct);
         db.products().insert(new Product(UUID.randomUUID(), "Chips", ""));
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         Product product = repo.get(id);
 
@@ -109,7 +109,7 @@ public class ProductRepositoryTest {
         Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
         db.products().insert(dbProduct);
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         Product product = repo.get(UUID.randomUUID());
 
@@ -120,7 +120,7 @@ public class ProductRepositoryTest {
     public void test_ProductRepository_Update_Null(){
         AppDatabase db = this.getDb();
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         repo.update(null);
 
@@ -135,7 +135,7 @@ public class ProductRepositoryTest {
         Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
         db.products().insert(dbProduct);
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         Product product = new Product(id, "Coffee", "http://coff.ee");
         product.setArticleNumber("co-0042");
@@ -153,7 +153,7 @@ public class ProductRepositoryTest {
     public void test_ProductRepository_Update_New(){
         AppDatabase db = this.getDb();
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         UUID id = UUID.randomUUID();
         Product product = new Product(id, "Chips", "");
@@ -173,7 +173,7 @@ public class ProductRepositoryTest {
     public void test_ProductRepository_Delete_NonExisting(){
         AppDatabase db = this.getDb();
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         boolean success = repo.delete(UUID.randomUUID());
 
@@ -188,7 +188,7 @@ public class ProductRepositoryTest {
         Product dbProduct = new Product(id, "Coffee", "http://coff.ee");
         db.products().insert(dbProduct);
 
-        ProductRepository repo = new ProductRepository(db);
+        ProductRepository repo = new ProductRepository(db, mock(IFileSystem.class));
 
         boolean success = repo.delete(id);
 

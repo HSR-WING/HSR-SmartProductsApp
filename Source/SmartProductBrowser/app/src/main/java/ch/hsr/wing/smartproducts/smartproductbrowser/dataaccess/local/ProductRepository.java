@@ -11,10 +11,12 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.P
 
 public class ProductRepository implements IProductRepository {
     private final AppDatabase _db;
+    private final IFileSystem _fileSystem;
 
     @Inject
-    public ProductRepository(AppDatabase db){
+    public ProductRepository(AppDatabase db, IFileSystem fileSystem){
         this._db = db;
+        this._fileSystem = fileSystem;
     }
 
     @Override
