@@ -29,4 +29,16 @@ public class AppSettings implements IAppSettings {
         editor.putString(key, value);
         editor.apply();
     }
+
+    @Override
+    public int getInt(String key) {
+        return this.getSettings().getInt(key, 0);
+    }
+
+    @Override
+    public void setInt(String key, int value) {
+        SharedPreferences.Editor editor = this.getSettings().edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
 }

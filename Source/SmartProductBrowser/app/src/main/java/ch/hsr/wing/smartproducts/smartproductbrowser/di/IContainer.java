@@ -11,6 +11,7 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.HttpModul
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.SettingsModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ItemViewModelModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ViewModelModule;
+import ch.hsr.wing.smartproducts.smartproductbrowser.views.MainActivity;
 import ch.hsr.wing.smartproducts.smartproductbrowser.views.ProductCatalogFragment;
 import ch.hsr.wing.smartproducts.smartproductbrowser.views.ShoppingCartFragment;
 import ch.hsr.wing.smartproducts.smartproductbrowser.views.adapters.AdapterModule;
@@ -30,6 +31,7 @@ import dagger.Component;
         BusinessModule.class,
         TaskModule.class})
 public interface IContainer {
+    void inject(MainActivity activity);
     void inject(ConnectionSettingsFragment fragment);
     void inject(ProductCatalogFragment fragment);
     void inject(ShoppingCartFragment fragment);

@@ -13,23 +13,53 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import javax.inject.Inject;
+
 import ch.hsr.wing.smartproducts.R;
+import ch.hsr.wing.smartproducts.smartproductbrowser.di.DI;
+import ch.hsr.wing.smartproducts.smartproductbrowser.views.navigation.IFragmentViewer;
+import ch.hsr.wing.smartproducts.smartproductbrowser.views.navigation.NavigationListener;
 import ch.hsr.wing.smartproducts.smartproductbrowser.views.settings.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity implements IFragmentViewer {
 
+    BottomNavigationView _navigation;
+
+    @Inject
+    NavigationListener _navigationListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DI.container(this).inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         enableToolbar();
-        BottomNavigationView navigation = registerNavigation();
-        initView(navigation);
+        this._navigation = registerNavigation();
     }
 
     private void enableToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    private BottomNavigationView registerNavigation(){
+        BottomNavigationView navigation = findViewById(R.id.navigation_menu);
+        navigation.setOnNavigationItemSelectedListener(this._navigationListener);
+        return navigation;
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        this._navigationListener.setViewer(this);
+        int view = this._navigationListener.getCurrentView();
+        this._navigation.setSelectedItemId(view);
+    }
+
+    @Override
+    protected void onPause(){
+        this._navigationListener.removeViewer();
+        super.onPause();
     }
 
     @Override
@@ -46,17 +76,6 @@ public class MainActivity extends AppCompatActivity implements IFragmentViewer {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private BottomNavigationView registerNavigation(){
-        BottomNavigationView navigation = findViewById(R.id.navigation_menu);
-        navigation.setOnNavigationItemSelectedListener(new NavigationListener(this));
-        return navigation;
-    }
-
-    private void initView(BottomNavigationView navigation){
-        int selected = navigation.getSelectedItemId();
-        navigation.setSelectedItemId(selected);
     }
 
     @Override

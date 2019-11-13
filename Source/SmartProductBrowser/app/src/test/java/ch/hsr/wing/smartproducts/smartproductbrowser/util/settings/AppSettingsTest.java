@@ -58,4 +58,29 @@ public class AppSettingsTest {
         verify(editor).putString("TestKey", "TestValue");
         verify(editor).apply();
     }
+
+    @Test
+    public void test_AppSettings_GetInt(){
+        SharedPreferences pref = mock(SharedPreferences.class);
+        when(pref.getInt("TestKey", 0)).thenReturn(42);
+
+        AppSettings settings = new AppSettings(this.toApp(pref));
+
+        assertEquals(42, settings.getInt("TestKey"));
+    }
+
+    @Test
+    public void test_AppSettings_SetInt(){
+        SharedPreferences pref = mock(SharedPreferences.class);
+        SharedPreferences.Editor editor = mock(SharedPreferences.Editor.class);
+        when(pref.edit()).thenReturn(editor);
+
+        AppSettings settings = new AppSettings(this.toApp(pref));
+
+        settings.setInt("TestKey", 42);
+
+        verify(pref).edit();
+        verify(editor).putInt("TestKey", 42);
+        verify(editor).apply();
+    }
 }

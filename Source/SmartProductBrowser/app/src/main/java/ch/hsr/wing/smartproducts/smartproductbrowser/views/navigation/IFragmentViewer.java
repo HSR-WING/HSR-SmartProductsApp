@@ -1,4 +1,4 @@
-package ch.hsr.wing.smartproducts.smartproductbrowser.views;
+package ch.hsr.wing.smartproducts.smartproductbrowser.views.navigation;
 
 import androidx.fragment.app.Fragment;
 
