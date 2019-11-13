@@ -48,7 +48,7 @@ public class ProductApiClient implements IProductApiClient {
                 if(response.isSuccessful()){
                     return ResponseTypes.OK;
                 }
-                return this.toResponseType(response.code());
+                return HttpUtil.toResponseType(response.code());
             }
         } catch (Exception ex){
             return ResponseTypes.UNREACHABLE;
@@ -63,9 +63,9 @@ public class ProductApiClient implements IProductApiClient {
             Request request = new Request.Builder().url(url.toString()).build();
             try(Response response = this._client.newCall(request).execute()){
                 if(!response.isSuccessful()){
-                    return this.noSuccess(response);
+                    return HttpUtil.noSuccess(response);
                 }
-                ProductInfoDto[] dtos = this.parseJsonTo(ProductInfoDto[].class, response.body());
+                ProductInfoDto[] dtos = HttpUtil.parseJsonTo(ProductInfoDto[].class, response.body());
                 return new ContentResponse<>(ResponseTypes.OK, Arrays.asList(dtos));
             }
         } catch (JsonParseException ex) {
@@ -84,9 +84,9 @@ public class ProductApiClient implements IProductApiClient {
             Request request = new Request.Builder().url(url.toString()).build();
             try(Response response = this._client.newCall(request).execute()){
                 if(!response.isSuccessful()){
-                    return this.noSuccess(response);
+                    return HttpUtil.noSuccess(response);
                 }
-                ProductDto dto = this.parseJsonTo(ProductDto.class, response.body());
+                ProductDto dto = HttpUtil.parseJsonTo(ProductDto.class, response.body());
                 return new ContentResponse<>(ResponseTypes.OK, dto);
             }
         } catch (JsonParseException ex) {
@@ -94,36 +94,5 @@ public class ProductApiClient implements IProductApiClient {
         } catch (Exception ex){
             return new ContentResponse<>(ResponseTypes.UNREACHABLE);
         }
-    }
-
-
-    private <T> T parseJsonTo(Class<T> c, ResponseBody body){
-        if(!this.isJson(body)){
-            throw new JsonParseException("Content is not JSON.");
-        }
-        try {
-            T content = new Gson().fromJson(body.string(), c);
-            return content;
-        } catch (Exception ex) {
-            throw new JsonParseException("Cannot parse ProductInfo.", ex);
-        }
-    }
-
-    private boolean isJson(ResponseBody body){
-        MediaType expectedType = MediaType.get("application/json");
-        MediaType actualtype = body.contentType();
-        return actualtype.type().equals(expectedType.type())
-                && actualtype.subtype().equals(expectedType.subtype());
-    }
-
-    private <T> ContentResponse<T> noSuccess(Response response){
-        return new ContentResponse<>(this.toResponseType(response.code()));
-    }
-
-    private ResponseTypes toResponseType(int statusCode){
-        if(statusCode >= 500){
-            return ResponseTypes.SERVER_ERROR;
-        }
-        return ResponseTypes.BAD_REQUEST;
     }
 }

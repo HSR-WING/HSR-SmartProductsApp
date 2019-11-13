@@ -1,7 +1,12 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 
+import com.google.gson.JsonParseException;
+
+import java.security.UnrecoverableEntryException;
+
 import javax.inject.Inject;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ContentResponse;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.DataDto;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ResponseTypes;
 import ch.hsr.wing.smartproducts.smartproductbrowser.util.settings.IConnectionSettings;
@@ -9,6 +14,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class DataApiClient implements IDataApiClient {
 
@@ -37,20 +43,33 @@ public class DataApiClient implements IDataApiClient {
                 if(response.isSuccessful()){
                     return ResponseTypes.OK;
                 }
-                if(response.code() >= 500){
-                    return ResponseTypes.SERVER_ERROR;
-                }
-                return ResponseTypes.BAD_REQUEST;
+                return HttpUtil.toResponseType(response.code());
             }
         } catch (Exception ex){
             return ResponseTypes.UNREACHABLE;
         }
     }
 
-    private static final String DATA_LATEST_URL = "/collection/{coll}/data/latest";
+    private static final String DATA_COLLECTION_PATH = "collection";
+    private static final String DATA_LATEST_PATH = "data/latest";
     @Override
-    public DataDto getLatest() {
-
-        return null;
+    public ContentResponse<DataDto> getLatest() {
+        try {
+            String container = this._settings.getDataCollection();
+            HttpUrl.Builder url = this.getApi().addPathSegment(DATA_COLLECTION_PATH).addPathSegment(container).addPathSegments(DATA_LATEST_PATH);
+            Request request = new Request.Builder().url(url.toString()).build();
+            try(Response response = this._client.newCall(request).execute()){
+                if(!response.isSuccessful()){
+                    return HttpUtil.noSuccess(response);
+                }
+                DataDto data = HttpUtil.parseJsonTo(DataDto.class, response.body());
+                return new ContentResponse<>(ResponseTypes.OK, data);
+            }
+        }
+        catch (JsonParseException ex){
+            return new ContentResponse<>(ResponseTypes.BAD_RESPONSE);
+        } catch (Exception ex){
+            return new ContentResponse<>(ResponseTypes.UNREACHABLE);
+        }
     }
 }
