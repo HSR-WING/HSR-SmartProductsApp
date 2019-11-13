@@ -43,6 +43,11 @@ public class SettingsViewModel extends BaseViewModel {
         this.productEndpoint.set(this._settings.getProductsEndpoint());
     }
 
+    @Override
+    protected void onRefresh(){
+        
+    }
+
     public void saveChanges(){
         this.saveSettings();
     }

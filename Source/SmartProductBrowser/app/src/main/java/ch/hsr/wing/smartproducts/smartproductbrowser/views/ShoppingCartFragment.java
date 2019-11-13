@@ -33,7 +33,7 @@ public class ShoppingCartFragment extends Fragment {
         DI.container(this).inject(this);
         super.onCreate(savedInstanceState);
 
-        this._viewModel = ViewModelProviders.of(this, this._factory).get(ShoppingCartViewModel.class);
+        this._viewModel = ViewModelProviders.of(this.getActivity(), this._factory).get(ShoppingCartViewModel.class);
         this._viewModel.init();
     }
 

@@ -20,6 +20,12 @@ public abstract class BaseViewModel extends ViewModel {
 
     protected abstract void onInit();
 
+    public void refresh(){
+        this.onRefresh();
+    }
+
+    protected abstract void onRefresh();
+
     @Override
     protected void onCleared(){
         if(this._isInitialized){

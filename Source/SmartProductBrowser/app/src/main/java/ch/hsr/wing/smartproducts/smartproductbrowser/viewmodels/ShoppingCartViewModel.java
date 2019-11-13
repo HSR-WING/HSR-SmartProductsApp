@@ -15,6 +15,11 @@ public class ShoppingCartViewModel extends BaseViewModel {
     }
 
     @Override
+    protected void onRefresh(){
+
+    }
+
+    @Override
     protected void onDispose() {
 
     }

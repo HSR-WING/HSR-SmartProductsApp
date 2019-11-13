@@ -37,7 +37,7 @@ public class ProductCatalogFragment extends Fragment {
         DI.container(this).inject(this);
         super.onCreate(savedInstanceState);
 
-        this._viewModel = ViewModelProviders.of(this, this._factory).get(ProductCatalogViewModel.class);
+        this._viewModel = ViewModelProviders.of(this.getActivity(), this._factory).get(ProductCatalogViewModel.class);
         this._viewModel.init();
     }
 
@@ -61,6 +61,7 @@ public class ProductCatalogFragment extends Fragment {
     public void onResume(){
         super.onResume();
         this._viewModel.bind(this._adapter);
+        this._viewModel.refresh();
     }
 
     @Override
