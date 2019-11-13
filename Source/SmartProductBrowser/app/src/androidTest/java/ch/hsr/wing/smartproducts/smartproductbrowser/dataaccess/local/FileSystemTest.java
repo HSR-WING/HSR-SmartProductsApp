@@ -2,6 +2,7 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import androidx.test.core.app.ApplicationProvider;
 
@@ -28,6 +29,11 @@ public class FileSystemTest {
 
             @Override
             public SharedPreferences getSettings() {
+                return null;
+            }
+
+            @Override
+            public Bitmap getImage(int resource) {
                 return null;
             }
         };
