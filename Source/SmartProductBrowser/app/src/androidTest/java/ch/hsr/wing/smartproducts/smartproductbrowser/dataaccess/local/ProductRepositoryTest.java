@@ -249,6 +249,11 @@ public class ProductRepositoryTest {
             public SharedPreferences getSettings() {
                 return null;
             }
+
+            @Override
+            public Bitmap getImage(int resource) {
+                return null;
+            }
         };
     }
 
