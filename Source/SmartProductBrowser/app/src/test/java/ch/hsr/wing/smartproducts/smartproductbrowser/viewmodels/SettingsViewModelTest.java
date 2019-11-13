@@ -91,7 +91,7 @@ public class SettingsViewModelTest {
     public void test_SettingsViewModel_TestDataApi(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
         ITaskFactory factory = mock(ITaskFactory.class);
-        ITask<Void> task = mock(ITask.class);
+        ITask task = mock(ITask.class);
         IDataApiClient client = mock(IDataApiClient.class);
         ICallbackHandler<ResponseTypes> callback = new NullCallbackHandler<>();
         when(factory.createPingTask(client, callback)).thenReturn(task);
@@ -108,7 +108,7 @@ public class SettingsViewModelTest {
     public void test_SettingsViewModel_TestProductApi(){
         IConnectionSettings settings = mock(IConnectionSettings.class);
         ITaskFactory factory = mock(ITaskFactory.class);
-        ITask<Void> task = mock(ITask.class);
+        ITask task = mock(ITask.class);
         IProductApiClient client = mock(IProductApiClient.class);
         ICallbackHandler<ResponseTypes> callback = new NullCallbackHandler<>();
         when(factory.createPingTask(client, callback)).thenReturn(task);

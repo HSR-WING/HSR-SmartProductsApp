@@ -2,6 +2,7 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.util.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 
 import org.junit.Test;
 
@@ -24,6 +25,11 @@ public class AppSettingsTest {
             @Override
             public SharedPreferences getSettings() {
                 return preferences;
+            }
+
+            @Override
+            public Bitmap getImage(int resource) {
+                return null;
             }
         };
     }
