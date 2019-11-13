@@ -14,6 +14,7 @@ public interface IProductRepository {
     void update(Product product);
     boolean delete(UUID productId);
 
+    boolean hasImage(UUID productId);
     Bitmap getImageOf(UUID productId);
     void storeImageOf(UUID productId, Bitmap image);
 }

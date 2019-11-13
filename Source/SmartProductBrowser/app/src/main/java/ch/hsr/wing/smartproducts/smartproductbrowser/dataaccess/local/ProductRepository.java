@@ -65,9 +65,20 @@ public class ProductRepository implements IProductRepository {
         return !this.exists(productId);
     }
 
-
     private static final String IMAGES_FOLDER = "ProductImages";
     private static final String IMAGE_FILE_EXTENSION = ".png";
+    @Override
+    public boolean hasImage(UUID productId) {
+        try {
+            String filename = this.toFilename(productId, IMAGE_FILE_EXTENSION);
+            return this._fileSystem.exists(IMAGES_FOLDER, filename);
+        } catch (Throwable ex){
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
     @Override
     public Bitmap getImageOf(UUID productId) {
         String filename = this.toFilename(productId, IMAGE_FILE_EXTENSION);
