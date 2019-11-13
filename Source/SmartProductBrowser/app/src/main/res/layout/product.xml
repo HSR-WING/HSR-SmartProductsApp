@@ -7,21 +7,43 @@
             type="ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ProductViewModel" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="200dp">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:scaleType="center"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
             bind:imageBitmap="@{productViewModel.image}"
             />
-        <TextView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|left"
-            android:text="@{productViewModel.name}" />
-    </LinearLayout>
+            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:alpha=".8"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginBottom="5dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_gravity="bottom|left"
+                android:text="@{productViewModel.name}" />
+        </FrameLayout>
+
+    </FrameLayout>
 </layout>

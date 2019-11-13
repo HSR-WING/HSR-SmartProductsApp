@@ -37,6 +37,9 @@ public class ProductViewModel {
         if(this._model == null){
             return this._app.getImage(R.drawable.ic_local_pizza_black_24dp);
         }
+        if(!this._repo.hasImage(this._model.getId())){
+            return this._app.getImage(R.drawable.ic_local_pizza_black_24dp);
+        }
         return this._repo.getImageOf(this._model.getId());
     }
 }
