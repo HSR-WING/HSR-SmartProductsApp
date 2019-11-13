@@ -7,5 +7,5 @@ import android.graphics.Bitmap;
 public interface IApp {
     Context getAppContext();
     SharedPreferences getSettings();
-    Bitmap getImage(int resource);
+    Bitmap getImageFromDrawable(int resource);
 }

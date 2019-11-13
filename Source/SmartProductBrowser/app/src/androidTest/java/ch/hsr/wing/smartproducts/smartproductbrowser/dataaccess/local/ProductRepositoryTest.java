@@ -251,7 +251,7 @@ public class ProductRepositoryTest {
             }
 
             @Override
-            public Bitmap getImage(int resource) {
+            public Bitmap getImageFromDrawable(int resource) {
                 return null;
             }
         };
