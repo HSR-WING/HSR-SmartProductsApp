@@ -26,9 +26,5 @@ public class ViewModelProviderFactory implements ViewModelProvider.Factory {
         }
         Provider<ViewModel> factory = this._factories.get(modelClass);
         return (T)factory.get();
-        /*if (!modelClass.isAssignableFrom(this._viewModel.getClass())) {
-            throw new IllegalArgumentException("Cannot assign class");
-        }
-        return (T)this._viewModel;*/
     }
 }
