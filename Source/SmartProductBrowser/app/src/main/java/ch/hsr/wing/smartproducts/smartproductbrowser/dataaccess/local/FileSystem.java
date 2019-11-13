@@ -27,6 +27,12 @@ public class FileSystem implements IFileSystem {
 
 
     @Override
+    public boolean exists(String path, String filename) {
+        File dir = this.ensurePath(path);
+        return new File(dir, filename).exists();
+    }
+
+    @Override
     public void store(String path, String filename, byte[] content) {
         File dir = this.ensurePath(path);
         try {
@@ -51,7 +57,11 @@ public class FileSystem implements IFileSystem {
     public byte[] load(String path, String filename) {
         File dir = this.ensurePath(path);
         try{
-            try(FileInputStream stream = new FileInputStream(new File(dir, filename))){
+            File file = new File(dir, filename);
+            if(!file.exists()){
+                return new byte[0];
+            }
+            try(FileInputStream stream = new FileInputStream(file)){
                 byte[] buffer = new byte[(int)stream.getChannel().size()];
                 stream.read(buffer);
                 return buffer;
