@@ -1,6 +1,7 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParseException;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ContentResponse;
@@ -34,7 +35,8 @@ class HttpUtil {
             throw new JsonParseException("Content is not JSON.");
         }
         try {
-            T content = new Gson().fromJson(body.string(), c);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
+            T content = gson.fromJson(body.string(), c);
             return content;
         } catch (Exception ex) {
             throw new JsonParseException("Cannot parse ProductInfo.", ex);

@@ -1,6 +1,9 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -22,9 +25,9 @@ public class DataDto {
     }
 
     @SerializedName("Data")
-    private JsonObject _data;
+    private String _data;
 
     public JsonObject getData(){
-        return this._data;
+        return new Gson().fromJson(this._data, JsonObject.class);
     }
 }

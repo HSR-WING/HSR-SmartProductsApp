@@ -213,7 +213,7 @@ public class DataApiClientTest {
     }
 
     @Test
-    public void test_DataApiClient_GetLatests_Content_NotJson() throws Exception{
+    public void test_DataApiClient_GetLatest_Content_NotJson() throws Exception{
         MockWebServer server = new MockWebServer();
 
         MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/xml");
@@ -234,7 +234,7 @@ public class DataApiClientTest {
     }
 
     @Test
-    public void test_DataApiClient_GetLatests_Content_Json_Status() throws Exception{
+    public void test_DataApiClient_GetLatest_Content_Json_Status() throws Exception{
         MockWebServer server = new MockWebServer();
 
 
@@ -262,7 +262,7 @@ public class DataApiClientTest {
     }
 
     @Test
-    public void test_DataApiClient_GetLatests_Content_Json() throws Exception{
+    public void test_DataApiClient_GetLatest_Content_Json() throws Exception{
         MockWebServer server = new MockWebServer();
 
 
@@ -270,7 +270,7 @@ public class DataApiClientTest {
         JsonObject jsonData = new JsonObject();
         jsonData.addProperty("Id", id.toString());
         jsonData.addProperty("Timestamp", "2019-10-18T07:32:40.948Z");
-        jsonData.addProperty("Data", "{ }");
+        jsonData.addProperty("Data", new JsonObject().toString());
 
         MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json").setBody(jsonData.toString());
         server.enqueue(response);
@@ -289,7 +289,40 @@ public class DataApiClientTest {
         assertTrue(result.hasContent());
         DataDto data = result.getContent();
         assertEquals(id, data.getId());
-        assertEquals(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse("2019-10-18T07:32:40.948Z"), data.getTimestamp());
+        assertEquals(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse("2019-10-18T07:32:40.948Z"), data.getTimestamp());
         assertNotNull(data.getData());
+    }
+
+    @Test
+    public void test_DataApiClient_GetLatest_Content_Json_Content() throws Exception{
+        MockWebServer server = new MockWebServer();
+
+
+        UUID id = UUID.randomUUID();
+        JsonObject jsonData = new JsonObject();
+        JsonObject jsonValue = new JsonObject();
+        jsonValue.addProperty("value", 42);
+        jsonData.addProperty("Data", jsonValue.toString());
+
+        MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json").setBody(jsonData.toString());
+        server.enqueue(response);
+
+        server.start();
+
+        IConnectionSettings settings = mock(IConnectionSettings.class);
+
+        when(settings.getDataEndpoint()).thenReturn(server.url("/").toString());
+        when(settings.getDataCollection()).thenReturn("test");
+
+        DataApiClient client = new DataApiClient(settings, new OkHttpClient());
+
+        ContentResponse<DataDto> result = client.getLatest();
+
+        assertTrue(result.hasContent());
+        DataDto data = result.getContent();
+        assertNotNull(data.getData());
+        JsonObject dataValue = data.getData();
+        assertNotNull(dataValue);
+        assertEquals(42, dataValue.get("value").getAsInt());
     }
 }
