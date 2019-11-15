@@ -1,5 +1,7 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels;
 
+import java.util.Timer;
+
 import javax.inject.Inject;
 
 public class ShoppingCartViewModel extends BaseViewModel {
@@ -9,9 +11,11 @@ public class ShoppingCartViewModel extends BaseViewModel {
 
     }
 
+    private final Timer timer = new Timer();
+
     @Override
     protected void onInit() {
-        
+
     }
 
     @Override
@@ -20,7 +24,17 @@ public class ShoppingCartViewModel extends BaseViewModel {
     }
 
     @Override
-    protected void onDispose() {
+    protected void onHold(){
 
+    }
+
+    @Override
+    protected void onDispose() {
+        this.clearTimer();
+    }
+
+    private void clearTimer() {
+        timer.cancel();
+        timer.purge();
     }
 }

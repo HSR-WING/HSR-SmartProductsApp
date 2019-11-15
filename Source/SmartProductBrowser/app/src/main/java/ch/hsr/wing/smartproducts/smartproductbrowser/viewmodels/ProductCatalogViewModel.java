@@ -75,6 +75,11 @@ public class ProductCatalogViewModel extends BaseViewModel {
     }
 
     @Override
+    protected void onHold(){
+
+    }
+
+    @Override
     protected void onDispose() {
 
     }

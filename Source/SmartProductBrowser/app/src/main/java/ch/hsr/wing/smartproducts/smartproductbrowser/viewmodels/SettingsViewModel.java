@@ -48,6 +48,11 @@ public class SettingsViewModel extends BaseViewModel {
         
     }
 
+    @Override
+    protected void onHold(){
+
+    }
+
     public void saveChanges(){
         this.saveSettings();
     }
