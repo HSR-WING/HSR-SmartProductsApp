@@ -54,7 +54,7 @@ class RefreshProductsTask extends AsyncTask<Void, Void, Void> implements ITask {
     }
 
     private void updateProdcuts(List<ProductInfoDto> content) {
-        Set<UUID> ids = this.getIdsOf(content);
+        Set<UUID> ids = this.getExistingIds();
         for(ProductInfoDto info : content){
             try{
                 ContentResponse<ProductDto> response = this._client.getDetailsOfProductById(info.getId());
@@ -70,9 +70,9 @@ class RefreshProductsTask extends AsyncTask<Void, Void, Void> implements ITask {
         this.removeUnavailableProducts(ids);
     }
 
-    private Set<UUID> getIdsOf(Iterable<ProductInfoDto> dtos){
+    private Set<UUID> getExistingIds(){
         Set<UUID> ids = new HashSet<>();
-        for(ProductInfoDto dto : dtos){
+        for(Product dto : this._repo.getAll()){
             ids.add(dto.getId());
         }
         return ids;
