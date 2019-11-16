@@ -1,6 +1,5 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks;
 
-public interface ITask {
-    void run();
+public interface IArgTask<T> {
+    void run(T arg);
 }
-

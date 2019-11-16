@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.AppModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.BusinessModule;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.TimerModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.TaskModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.LocalDataAccessModule;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.RemoteDataAccessModule;
@@ -29,6 +30,7 @@ import dagger.Component;
         LocalDataAccessModule.class,
         HttpModule.class,
         BusinessModule.class,
+        TimerModule.class,
         TaskModule.class})
 public interface IContainer {
     void inject(MainActivity activity);

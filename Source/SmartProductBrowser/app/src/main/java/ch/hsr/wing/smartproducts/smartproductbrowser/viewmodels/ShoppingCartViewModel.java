@@ -1,38 +1,62 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels;
 
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.Timer;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import ch.hsr.wing.smartproducts.R;
 import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.shoppingcart.DataReloadTimerTask;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.shoppingcart.IDataReloadHandler;
 import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
+import ch.hsr.wing.smartproducts.smartproductbrowser.entities.ShoppingCart;
 
-public class ShoppingCartViewModel extends BaseViewModel {
+public class ShoppingCartViewModel extends BaseViewModel implements IDataReloadHandler {
 
     private final DecimalFormat df = new DecimalFormat("##0.00");
 
+    private final Provider<DataReloadTimerTask> _reloadTaskFactory;
     private final IApp _app;
 
     @Inject
-    public ShoppingCartViewModel(IApp app){
+    public ShoppingCartViewModel(Provider<DataReloadTimerTask> taskFactory, IApp app){
+        this._reloadTaskFactory = taskFactory;
         this._app = app;
     }
 
-    private final Timer timer = new Timer();
+    private final Timer _timer = new Timer();
+    private final SimpleDateFormat _dateFormat = new SimpleDateFormat("dd.MM.YYYY HH:mm:ss");
 
     @Override
     protected void onInit() {
-
+        this._dateFormat.setTimeZone(TimeZone.getDefault());
     }
+
+    private static final int TIMER_RATE_IN_SECONDS = 30;
+
+    private DataReloadTimerTask _reloadTask;
 
     @Override
     protected void onRefresh(){
+        this._reloadTask = this._reloadTaskFactory.get();
+        this._reloadTask.register(this);
+        this._timer.scheduleAtFixedRate(this._reloadTask, 1000, TIMER_RATE_IN_SECONDS * 1000);
+    }
 
+    private ShoppingCart _current;
+    @Override
+    public void onUpdate(ShoppingCart cart) {
+        if(cart == null){
+            return;
+        }
+        this._current = cart;
+        this.refreshBindings();
     }
 
     private final Set<IAdapterBinding<CartItem>> _bindings = new HashSet<>();
@@ -50,12 +74,17 @@ public class ShoppingCartViewModel extends BaseViewModel {
         this._bindings.remove(binding);
     }
 
-    private Date _cartItemsTimestamp = null;
+    private void refreshBindings(){
+        for(IAdapterBinding<CartItem> binding : this._bindings){
+            binding.refresh(this._current.getItems());
+        }
+    }
+
     public String getCartItemsTimestamp(){
-        if(this._cartItemsTimestamp == null){
+        if(this._current == null){
             return this._app.getString(R.string.updated_never);
         }
-        return "";
+        return this._dateFormat.format(this._current.getTimestamp());
     }
 
     public String getTotalAmount(){
@@ -65,7 +94,7 @@ public class ShoppingCartViewModel extends BaseViewModel {
 
     @Override
     protected void onHold(){
-
+        this.clearTimer();
     }
 
     @Override
@@ -74,7 +103,11 @@ public class ShoppingCartViewModel extends BaseViewModel {
     }
 
     private void clearTimer() {
-        timer.cancel();
-        timer.purge();
+        if(this._reloadTask != null){
+            this._reloadTask.unregister();
+        }
+        this._timer.cancel();
+        this._timer.purge();
     }
+
 }

@@ -39,7 +39,7 @@ class HttpUtil {
             T content = gson.fromJson(body.string(), c);
             return content;
         } catch (Exception ex) {
-            throw new JsonParseException("Cannot parse ProductInfo.", ex);
+            throw new JsonParseException("Cannot parse content.", ex);
         }
     }
 }

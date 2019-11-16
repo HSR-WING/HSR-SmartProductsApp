@@ -25,9 +25,9 @@ public class DataDto {
     }
 
     @SerializedName("Data")
-    private String _data;
+    private JsonObject _data;
 
     public JsonObject getData(){
-        return new Gson().fromJson(this._data, JsonObject.class);
+        return this._data;
     }
 }

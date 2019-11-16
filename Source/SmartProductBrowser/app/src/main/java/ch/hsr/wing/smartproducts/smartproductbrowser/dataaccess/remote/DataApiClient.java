@@ -50,13 +50,13 @@ public class DataApiClient implements IDataApiClient {
         }
     }
 
-    private static final String DATA_COLLECTION_PATH = "collection";
+    private static final String DATA_COLLECTION_PATH = "db/collection";
     private static final String DATA_LATEST_PATH = "data/latest";
     @Override
     public ContentResponse<DataDto> getLatest() {
         try {
             String container = this._settings.getDataCollection();
-            HttpUrl.Builder url = this.getApi().addPathSegment(DATA_COLLECTION_PATH)
+            HttpUrl.Builder url = this.getApi().addPathSegments(DATA_COLLECTION_PATH)
                     .addPathSegment(container).addPathSegments(DATA_LATEST_PATH);
             Request request = new Request.Builder().url(url.toString()).build();
             try(Response response = this._client.newCall(request).execute()){

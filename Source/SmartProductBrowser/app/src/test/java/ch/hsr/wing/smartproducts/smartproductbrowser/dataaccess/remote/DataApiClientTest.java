@@ -164,7 +164,7 @@ public class DataApiClientTest {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull RecordedRequest recordedRequest) throws InterruptedException {
-                if(!recordedRequest.getPath().equals("/api/collection/test/data/latest")){
+                if(!recordedRequest.getPath().equals("/api/db/collection/test/data/latest")){
                     return getJsonResponse().setResponseCode(400);
                 }
                 return getJsonResponse().setResponseCode(200);
@@ -192,7 +192,7 @@ public class DataApiClientTest {
             @NotNull
             @Override
             public MockResponse dispatch(@NotNull RecordedRequest recordedRequest) throws InterruptedException {
-                if(!recordedRequest.getPath().equals("/api/collection/test/data/latest")){
+                if(!recordedRequest.getPath().equals("/api/db/collection/test/data/latest")){
                     return getJsonResponse().setResponseCode(404);
                 }
                 return getJsonResponse().setResponseCode(200);
@@ -242,7 +242,7 @@ public class DataApiClientTest {
         JsonObject jsonProduct = new JsonObject();
         jsonProduct.addProperty("Id", pid.toString());
         jsonProduct.addProperty("Timestamp", "2019-10-18T07:32:40.948Z");
-        jsonProduct.addProperty("Data", "{ }");
+        jsonProduct.add("Data", new JsonObject());
 
         MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json");
         server.enqueue(response);
@@ -270,7 +270,7 @@ public class DataApiClientTest {
         JsonObject jsonData = new JsonObject();
         jsonData.addProperty("Id", id.toString());
         jsonData.addProperty("Timestamp", "2019-10-18T07:32:40.948Z");
-        jsonData.addProperty("Data", new JsonObject().toString());
+        jsonData.add("Data", new JsonObject());
 
         MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json").setBody(jsonData.toString());
         server.enqueue(response);
@@ -302,7 +302,7 @@ public class DataApiClientTest {
         JsonObject jsonData = new JsonObject();
         JsonObject jsonValue = new JsonObject();
         jsonValue.addProperty("value", 42);
-        jsonData.addProperty("Data", jsonValue.toString());
+        jsonData.add("Data", jsonValue);
 
         MockResponse response = new MockResponse().setResponseCode(200).setHeader("Content-Type", "application/json").setBody(jsonData.toString());
         server.enqueue(response);

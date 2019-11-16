@@ -8,6 +8,8 @@ import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
 import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHandler;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITaskFactory;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.IProductRepository;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
 import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
@@ -16,11 +18,13 @@ public class CartItemViewModel {
 
     private final DecimalFormat df = new DecimalFormat("##0.00");
 
+    private final ITaskFactory _tasks;
     private final IProductRepository _repo;
     private final IApp _app;
 
     @Inject
-    public CartItemViewModel(IProductRepository repo, IApp app){
+    public CartItemViewModel(ITaskFactory tasks, IProductRepository repo, IApp app){
+        this._tasks = tasks;
         this._repo = repo;
         this._app = app;
     }
@@ -30,7 +34,12 @@ public class CartItemViewModel {
 
     public void init(CartItem model){
         this._model = model;
-        this._product = this._repo.get(this._model.getId());
+        this._tasks.createLoadProductTask(new ICallbackHandler<Product>() {
+            @Override
+            public void handle(Product result) {
+                _product = result;
+            }
+        }).run(this._model.getId());
     }
 
     private boolean hasProduct(){

@@ -23,6 +23,11 @@ public class AppSettingsTest {
             }
 
             @Override
+            public String getString(int resource) {
+                return null;
+            }
+
+            @Override
             public SharedPreferences getSettings() {
                 return preferences;
             }

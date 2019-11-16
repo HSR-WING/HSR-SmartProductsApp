@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHandler;
-import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.IDataDtoConverter;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.shoppingcart.IDataDtoConverter;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.IDataApiClient;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.ContentResponse;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.DataDto;

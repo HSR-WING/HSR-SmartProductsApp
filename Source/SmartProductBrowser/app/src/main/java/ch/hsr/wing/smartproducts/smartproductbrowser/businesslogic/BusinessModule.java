@@ -1,5 +1,7 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.shoppingcart.DefaultShoppingCartConverter;
+import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.shoppingcart.IDataDtoConverter;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITaskFactory;
 import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.TaskFactory;
 import dagger.Binds;
