@@ -14,7 +14,7 @@ import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
 
 public class CartItemViewModel {
 
-    private final DecimalFormat df = new DecimalFormat("###.00");
+    private final DecimalFormat df = new DecimalFormat("##0.00");
 
     private final IProductRepository _repo;
     private final IApp _app;
@@ -52,7 +52,7 @@ public class CartItemViewModel {
     }
 
     public String getAmount(){
-        return Integer.toString(this._model.getNumber());
+        return Integer.toString(this._model.getNumber()) + "x";
     }
 
     public String getPricePerItem(){
