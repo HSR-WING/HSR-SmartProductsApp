@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
+import ch.hsr.wing.smartproducts.databinding.FragmentShoppingCartBinding;
 import ch.hsr.wing.smartproducts.smartproductbrowser.di.DI;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ShoppingCartViewModel;
 
@@ -39,8 +41,9 @@ public class ShoppingCartFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
-        return view;
+        FragmentShoppingCartBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shopping_cart, container, false);
+        binding.setShoppingCartViewModel(this._viewModel);
+        return binding.getRoot();
     }
 
 
