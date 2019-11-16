@@ -10,4 +10,7 @@ public abstract class BusinessModule {
 
     @Binds
     public abstract ITaskFactory getFactory(TaskFactory factory);
+
+    @Binds
+    public abstract IDataDtoConverter getConverter(DefaultShoppingCartConverter converter);
 }
