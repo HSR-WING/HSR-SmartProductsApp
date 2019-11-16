@@ -20,4 +20,8 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="InfoTextStyle">
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>

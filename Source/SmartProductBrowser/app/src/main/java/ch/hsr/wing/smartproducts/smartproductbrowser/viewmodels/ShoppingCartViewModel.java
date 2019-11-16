@@ -1,6 +1,7 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels;
 
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
@@ -9,12 +10,11 @@ import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
 import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
-import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
 import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
 
 public class ShoppingCartViewModel extends BaseViewModel {
 
-    private final DecimalFormat df = new DecimalFormat("###.00");
+    private final DecimalFormat df = new DecimalFormat("##0.00");
 
     private final IApp _app;
 
@@ -48,6 +48,14 @@ public class ShoppingCartViewModel extends BaseViewModel {
             return;
         }
         this._bindings.remove(binding);
+    }
+
+    private Date _cartItemsTimestamp = null;
+    public String getCartItemsTimestamp(){
+        if(this._cartItemsTimestamp == null){
+            return this._app.getString(R.string.updated_never);
+        }
+        return "";
     }
 
     public String getTotalAmount(){

@@ -24,4 +24,6 @@
     <string name="total_amount">Total</string>
     <string name="currency">CHF</string>
     <string name="unknown_product">Unknown product</string>
+    <string name="updated">Updated</string>
+    <string name="updated_never">never</string>
 </resources>
