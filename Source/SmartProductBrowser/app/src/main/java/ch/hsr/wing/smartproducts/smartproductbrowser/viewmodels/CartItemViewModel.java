@@ -8,8 +8,6 @@ import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
 import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
-import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.ICallbackHandler;
-import ch.hsr.wing.smartproducts.smartproductbrowser.businesslogic.tasks.ITaskFactory;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.IProductRepository;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
 import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
@@ -18,46 +16,37 @@ public class CartItemViewModel {
 
     private final DecimalFormat df = new DecimalFormat("##0.00");
 
-    private final ITaskFactory _tasks;
     private final IProductRepository _repo;
     private final IApp _app;
 
     @Inject
-    public CartItemViewModel(ITaskFactory tasks, IProductRepository repo, IApp app){
-        this._tasks = tasks;
+    public CartItemViewModel(IProductRepository repo, IApp app){
         this._repo = repo;
         this._app = app;
     }
 
     private CartItem _model;
-    private Product _product;
 
     public void init(CartItem model){
         this._model = model;
-        this._tasks.createLoadProductTask(new ICallbackHandler<Product>() {
-            @Override
-            public void handle(Product result) {
-                _product = result;
-            }
-        }).run(this._model.getId());
     }
 
     private boolean hasProduct(){
-        return this._product != null;
+        return this._model != null;
     }
 
     public String getName(){
         if(!this.hasProduct()){
             return this._app.getString(R.string.unknown_product);
         }
-        return this._product.getName();
+        return this._model.getProduct().getName();
     }
 
     public String getArticleNumber(){
         if(!this.hasProduct()){
             return "";
         }
-        return this._product.getArticleNumber();
+        return this._model.getProduct().getArticleNumber();
     }
 
     public String getAmount(){
@@ -68,14 +57,14 @@ public class CartItemViewModel {
         if(!this.hasProduct()){
             return "";
         }
-        return df.format(this._product.getPrice());
+        return df.format(this._model.getProduct().getPrice());
     }
 
     public String getTotalPrice(){
         if(!this.hasProduct()){
             return "";
         }
-        return df.format(this._model.getNumber() * this._product.getPrice());
+        return df.format(this._model.getNumber() * this._model.getProduct().getPrice());
     }
 
     public Bitmap getImage(){

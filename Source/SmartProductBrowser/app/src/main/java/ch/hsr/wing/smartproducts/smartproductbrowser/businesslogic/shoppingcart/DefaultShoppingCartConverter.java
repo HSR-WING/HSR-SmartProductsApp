@@ -10,15 +10,19 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.IProductRepository;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
 import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.remote.entities.DataDto;
 import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
 import ch.hsr.wing.smartproducts.smartproductbrowser.entities.ShoppingCart;
 
 public class DefaultShoppingCartConverter implements IDataDtoConverter {
 
-    @Inject
-    public DefaultShoppingCartConverter(){
+    private final IProductRepository _repo;
 
+    @Inject
+    public DefaultShoppingCartConverter(IProductRepository repo){
+        this._repo = repo;
     }
 
     @Override
@@ -33,7 +37,8 @@ public class DefaultShoppingCartConverter implements IDataDtoConverter {
             try {
                 UUID id = UUID.fromString(entry.getKey());
                 int amount = entry.getValue().getAsInt();
-                items.add(new CartItem(id, amount));
+                Product p = this._repo.get(id);
+                items.add(new CartItem(id, amount, p));
             } catch (Throwable t) {
                 continue;
             }

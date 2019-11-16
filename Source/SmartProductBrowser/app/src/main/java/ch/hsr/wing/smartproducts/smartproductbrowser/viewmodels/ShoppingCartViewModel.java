@@ -38,7 +38,7 @@ public class ShoppingCartViewModel extends BaseViewModel implements IDataReloadH
         this._dateFormat.setTimeZone(TimeZone.getDefault());
     }
 
-    private static final int TIMER_RATE_IN_SECONDS = 30;
+    private static final int TIMER_RATE_IN_SECONDS = 5;
 
     private DataReloadTimerTask _reloadTask;
 
@@ -46,7 +46,7 @@ public class ShoppingCartViewModel extends BaseViewModel implements IDataReloadH
     protected void onRefresh(){
         this._reloadTask = this._reloadTaskFactory.get();
         this._reloadTask.register(this);
-        this._timer.scheduleAtFixedRate(this._reloadTask, 1000, TIMER_RATE_IN_SECONDS * 1000);
+        this._timer.scheduleAtFixedRate(this._reloadTask, 0, TIMER_RATE_IN_SECONDS * 1000);
     }
 
     private ShoppingCart _current;
@@ -57,6 +57,22 @@ public class ShoppingCartViewModel extends BaseViewModel implements IDataReloadH
         }
         this._current = cart;
         this.refreshBindings();
+    }
+
+    private IViewModelObserver _observer;
+    public void bind(IViewModelObserver observer){
+        this._observer = observer;
+    }
+
+    public void unbind(){
+        this._observer = null;
+    }
+
+    public void refreshUI(){
+        if(this._observer == null){
+            return;
+        }
+        this._observer.refreshUI();
     }
 
     private final Set<IAdapterBinding<CartItem>> _bindings = new HashSet<>();
@@ -75,6 +91,7 @@ public class ShoppingCartViewModel extends BaseViewModel implements IDataReloadH
     }
 
     private void refreshBindings(){
+        this.refreshUI();
         for(IAdapterBinding<CartItem> binding : this._bindings){
             binding.refresh(this._current.getItems());
         }
@@ -88,8 +105,19 @@ public class ShoppingCartViewModel extends BaseViewModel implements IDataReloadH
     }
 
     public String getTotalAmount(){
-        String value = df.format(0.0);
-        return String.format("%s %s", this._app.getString(R.string.currency), value);
+        double total = this.sumTotalAmountOfCart();
+        return String.format("%s %s", this._app.getString(R.string.currency), df.format(total));
+    }
+
+    private double sumTotalAmountOfCart(){
+        if(this._current == null){
+            return 0.0;
+        }
+        double total = 0;
+        for(CartItem item : this._current.getItems()){
+            total += item.getNumber() * item.getProduct().getPrice();
+        }
+        return total;
     }
 
     @Override

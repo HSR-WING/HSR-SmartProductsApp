@@ -24,4 +24,23 @@
         <item name="android:textSize">12dp</item>
         <item name="android:textColor">@color/colorAccent</item>
     </style>
+    <style name="CartItemLabelStyle">
+        <item name="android:textSize">18dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="CartItemDetailStyle">
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="CartItemValueStyle">
+        <item name="android:textSize">24dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>

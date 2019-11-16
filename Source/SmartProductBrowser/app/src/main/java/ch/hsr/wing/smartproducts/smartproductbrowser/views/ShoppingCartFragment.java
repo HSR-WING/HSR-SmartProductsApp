@@ -20,6 +20,7 @@ import ch.hsr.wing.smartproducts.databinding.FragmentShoppingCartBinding;
 import ch.hsr.wing.smartproducts.smartproductbrowser.di.DI;
 import ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.ShoppingCartViewModel;
 import ch.hsr.wing.smartproducts.smartproductbrowser.views.adapters.CartItemsAdapter;
+import ch.hsr.wing.smartproducts.smartproductbrowser.views.adapters.ViewModelObserver;
 
 public class ShoppingCartFragment extends Fragment {
 
@@ -51,6 +52,7 @@ public class ShoppingCartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         FragmentShoppingCartBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shopping_cart, container, false);
         binding.setShoppingCartViewModel(this._viewModel);
+        this._viewModel.bind(new ViewModelObserver(binding));
 
         View view = binding.getRoot();
 
@@ -72,5 +74,11 @@ public class ShoppingCartFragment extends Fragment {
     public void onPause(){
         this._viewModel.unbind(this._adapter);
         super.onPause();
+    }
+
+    @Override
+    public void onStop(){
+        this._viewModel.unbind();
+        super.onStop();
     }
 }

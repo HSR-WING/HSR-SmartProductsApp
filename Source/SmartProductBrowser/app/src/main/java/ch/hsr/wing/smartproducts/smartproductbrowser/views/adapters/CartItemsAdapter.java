@@ -27,8 +27,8 @@ public class CartItemsAdapter extends BaseAdapter implements IAdapterBinding<Car
     private final IApp _app;
 
     @Inject
-    public CartItemsAdapter(Provider<CartItemViewModel> vmfactory, IApp app){
-        this._vmFactory = vmfactory;
+    public CartItemsAdapter(Provider<CartItemViewModel> vmFactory, IApp app){
+        this._vmFactory = vmFactory;
         this._app = app;
     }
 
@@ -76,7 +76,8 @@ public class CartItemsAdapter extends BaseAdapter implements IAdapterBinding<Car
         } else {
             holder = (BindingViewHolder<CartitemBinding>)convertView.getTag();
         }
-        holder.getBinding().setCartItemViewModel(this.getCartItemAt(position));
+        CartItemViewModel vm = this.getCartItemAt(position);
+        holder.getBinding().setCartItemViewModel(vm);
         return holder.getView();
     }
 
