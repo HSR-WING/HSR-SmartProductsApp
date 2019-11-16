@@ -22,6 +22,11 @@ public class AppWrapper implements IApp {
     }
 
     @Override
+    public String getString(int resource) {
+        return this.getAppContext().getResources().getString(resource);
+    }
+
+    @Override
     public SharedPreferences getSettings() {
         return this._app.getSettings();
     }

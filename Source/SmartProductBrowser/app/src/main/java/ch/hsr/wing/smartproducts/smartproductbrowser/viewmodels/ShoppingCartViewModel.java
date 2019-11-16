@@ -5,13 +5,18 @@ import java.util.Timer;
 
 import javax.inject.Inject;
 
+import ch.hsr.wing.smartproducts.R;
+import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
+
 public class ShoppingCartViewModel extends BaseViewModel {
 
     private final DecimalFormat df = new DecimalFormat("###.00");
 
-    @Inject
-    public ShoppingCartViewModel(){
+    private final IApp _app;
 
+    @Inject
+    public ShoppingCartViewModel(IApp app){
+        this._app = app;
     }
 
     private final Timer timer = new Timer();
@@ -27,7 +32,8 @@ public class ShoppingCartViewModel extends BaseViewModel {
     }
 
     public String getTotalAmount(){
-        return df.format(0.0);
+        String value = df.format(0.0);
+        return String.format("%s %s", this._app.getString(R.string.currency), value);
     }
 
     @Override
