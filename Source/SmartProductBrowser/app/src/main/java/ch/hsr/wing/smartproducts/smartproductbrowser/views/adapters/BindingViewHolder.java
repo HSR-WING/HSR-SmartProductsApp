@@ -2,17 +2,17 @@ package ch.hsr.wing.smartproducts.smartproductbrowser.views.adapters;
 
 import android.view.View;
 
-public class BindingViewHolder<T> {
-    private View _view;
+import androidx.databinding.ViewDataBinding;
+
+public class BindingViewHolder<T extends ViewDataBinding> {
     private T _binding;
 
-    public BindingViewHolder(View view, T binding){
-        this._view = view;
+    public BindingViewHolder(T binding){
         this._binding = binding;
     }
 
     public View getView(){
-        return this._view;
+        return this._binding.getRoot();
     }
 
     public T getBinding(){

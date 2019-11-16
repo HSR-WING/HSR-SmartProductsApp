@@ -1,12 +1,16 @@
 package ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels;
 
 import java.text.DecimalFormat;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 
 import javax.inject.Inject;
 
 import ch.hsr.wing.smartproducts.R;
 import ch.hsr.wing.smartproducts.smartproductbrowser.IApp;
+import ch.hsr.wing.smartproducts.smartproductbrowser.dataaccess.local.entities.Product;
+import ch.hsr.wing.smartproducts.smartproductbrowser.entities.CartItem;
 
 public class ShoppingCartViewModel extends BaseViewModel {
 
@@ -29,6 +33,21 @@ public class ShoppingCartViewModel extends BaseViewModel {
     @Override
     protected void onRefresh(){
 
+    }
+
+    private final Set<IAdapterBinding<CartItem>> _bindings = new HashSet<>();
+    public void bind(IAdapterBinding<CartItem> binding){
+        if(binding == null){
+            return;
+        }
+        this._bindings.add(binding);
+    }
+
+    public void unbind(IAdapterBinding<CartItem> binding){
+        if(binding == null){
+            return;
+        }
+        this._bindings.remove(binding);
     }
 
     public String getTotalAmount(){

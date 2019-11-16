@@ -71,9 +71,9 @@ public class ProductsAdapter extends BaseAdapter implements IAdapterBinding<Prod
         if (convertView == null) {
             ProductBinding binding = DataBindingUtil.inflate(LayoutInflater.from(this._app.getAppContext()), R.layout.product, parent, false);
 
-            holder = new BindingViewHolder<>(binding.getRoot(), binding);
+            holder = new BindingViewHolder<>(binding);
             holder.getView().setTag(holder);
-        } else{
+        } else {
             holder = (BindingViewHolder<ProductBinding>)convertView.getTag();
         }
         holder.getBinding().setProductViewModel(this.getProductAt(position));
