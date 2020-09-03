@@ -12,7 +12,9 @@ The detailed information about the items will be downloaded via APIs (hosted on 
 ## Development
 
 ### Platform
-- Android
+
+- Android 10 (R, SDK 30)
 
 ### IDE
-- Android Studio
+
+- Android Studio 4.0.1
