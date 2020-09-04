@@ -4,7 +4,7 @@
     <data>
         <variable
             name="cartItemViewModel"
-            type="ch.hsr.wing.smartproducts.smartproductbrowser.viewmodels.CartItemViewModel" />
+            type="ch.ost.wing.smartproducts.smartproductbrowser.viewmodels.CartItemViewModel" />
     </data>
 
     <GridLayout
