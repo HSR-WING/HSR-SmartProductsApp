@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId 'ch.ost.wing.smartproducts.smartproductbrowser'
         minSdkVersion 28
@@ -29,6 +28,7 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    namespace 'ch.ost.wing.smartproducts'
 }
 
 dependencies {
