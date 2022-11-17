@@ -4,7 +4,7 @@
     <data>
         <variable
             name="productViewModel"
-            type="ch.ost.wing.smartproducts.smartproductbrowser.viewmodels.ProductViewModel" />
+            type="ch.ost.wing.smartproducts.shoppingcartapp.viewmodels.ProductViewModel" />
     </data>
 
     <FrameLayout

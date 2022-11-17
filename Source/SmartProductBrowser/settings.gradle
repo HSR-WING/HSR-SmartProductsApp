@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='SmartProductBrowser'
+rootProject.name='ShoppingCartApp'

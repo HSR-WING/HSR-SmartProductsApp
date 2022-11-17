@@ -5,14 +5,14 @@
 
     <application
         android:allowBackup="true"
-        android:name="ch.ost.wing.smartproducts.smartproductbrowser.App"
+        android:name="ch.ost.wing.smartproducts.shoppingcartapp.App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name="ch.ost.wing.smartproducts.smartproductbrowser.views.MainActivity"
+        <activity android:name="ch.ost.wing.smartproducts.shoppingcartapp.views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ch.ost.wing.smartproducts.smartproductbrowser.views.settings.SettingsActivity"
+        <activity android:name="ch.ost.wing.smartproducts.shoppingcartapp.views.settings.SettingsActivity"
             android:label="@string/settings"/>
     </application>
 </manifest>

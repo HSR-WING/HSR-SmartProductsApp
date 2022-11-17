@@ -4,14 +4,14 @@
     <data>
         <variable
             name="shoppingCartViewModel"
-            type="ch.ost.wing.smartproducts.smartproductbrowser.viewmodels.ShoppingCartViewModel" />
+            type="ch.ost.wing.smartproducts.shoppingcartapp.viewmodels.ShoppingCartViewModel" />
     </data>
 
 <FrameLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".smartproductbrowser.views.ShoppingCartFragment">
+    tools:context=".shoppingcartapp.views.ShoppingCartFragment">
     <ImageView
         style="@style/BackgroundImage"
         android:layout_width="match_parent"
